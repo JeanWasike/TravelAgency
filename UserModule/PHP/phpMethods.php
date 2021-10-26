@@ -1,13 +1,20 @@
 <?php 
 
 //For tips and tricks, see '../PHP/phpTipsAndTricks.php'
+//NOTE: to specify port number, see 'dbPortInfo' method.
+
+function dbPortInfo(){
+	$dbport = "3306"; //Can be specified according to Developer's preferred or available port.
+	return ($dbport);
+}
 
 function connect(){
 	$dbserver = "localhost";
 	$dbuser = "root";
 	$dbpass = "";
-	$dbname = "db_travel";
-	$link=mysqli_connect($dbserver,$dbuser,$dbpass,$dbname) or die("Could not connect".mysqli_connect_error());
+	$dbname = "travelagency";
+	$dbport = dbPortInfo(); //Can be specified according to Developer's preferred or available port.
+	$link=mysqli_connect($dbserver,$dbuser,$dbpass,$dbname,$dbport) or die("Could not connect".mysqli_connect_error());
 	return ($link);
 }
 
@@ -42,8 +49,14 @@ function destroyCookie($cookieName){
 }
 
 function verifyUser($varUsername, $varPassword){
-	$sql="SELECT * FROM tbl_client where clientUsername = '".$varUsername."'";
-	$conn = new mysqli("localhost","root","","db_travel");
+	$dbserver = "localhost";
+	$dbuser = "root";
+	$dbpass = "";
+	$dbname = "travelagency";
+	$dbport = dbPortInfo(); //Can be specified according to Developer's preferred or available port.
+
+	$sql="SELECT * FROM tbl_client where clientUName = '".$varUsername."'";
+	$conn = new mysqli($dbserver,$dbuser,$dbpass,$dbname,$dbport);
 	$result= $conn->query($sql);
 	if (mysqli_num_rows($result)==0) { 
 		echo '<script>alert("User not found! Try logging in again.");
@@ -53,7 +66,7 @@ function verifyUser($varUsername, $varPassword){
 			$hashedPass = $res['clientPassword'];
 			$verify = password_verify($varPassword, $hashedPass);
 		  	if ($verify) {
-				$_SESSION['User']=$res['clientUsername'];
+				$_SESSION['User']=$res['clientUName'];
 				$_SESSION['UserID']=$res['clientID'];
 				echo("<script>
 					window.location.href='../FRONT/welcomePage.php';

@@ -14,7 +14,7 @@ $hashedPass = password_hash($varPassword,PASSWORD_DEFAULT);
 
 if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])){
 	//Inserting data
-	$sql_insert = "INSERT INTO tbl_client(clientFName,clientLName,clientUsername,clientPhone,clientEmail,clientPassword,clientLocation) 
+	$sql_insert = "INSERT INTO tbl_client(clientFName,clientLName,clientUName,clientPhone,clientEmail,clientPassword,clientLocation) 
 		VALUES('$varFName','$varLName','$varUsername','$varPhone','$varEmail','$hashedPass',
 		'$varLocation')";
 	setData($sql_insert);
