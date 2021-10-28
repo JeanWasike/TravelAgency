@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Oct 25, 2021 at 05:38 PM
+-- Host: 127.0.0.1
+-- Generation Time: Oct 28, 2021 at 04:32 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -20,6 +20,100 @@ SET time_zone = "+00:00";
 --
 -- Database: `travelagency`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `airports_and_airstrips_table`
+--
+
+CREATE TABLE `airports_and_airstrips_table` (
+  `ID` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `airports_and_airstrips_table`
+--
+
+INSERT INTO `airports_and_airstrips_table` (`ID`, `name`) VALUES
+(1, 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya'),
+(2, 'Dar es Salaam International (DAR),Tanzania'),
+(3, 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia'),
+(4, 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania'),
+(5, 'Mombasa - Mombasa Moi International Airport (MBA),Kenya,Tanzania'),
+(6, 'Kigali-Kigali International Airport (KGL),Rwanda');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booked_buses_table`
+--
+
+CREATE TABLE `booked_buses_table` (
+  `ID` int(10) NOT NULL,
+  `clientID` int(8) NOT NULL,
+  `busID` int(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `departureDate` date NOT NULL,
+  `returnDate` date NOT NULL,
+  `class` varchar(10) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booked_cars_table`
+--
+
+CREATE TABLE `booked_cars_table` (
+  `ID` int(10) NOT NULL,
+  `clientID` int(8) NOT NULL,
+  `vehicleIdentificationNumber` int(20) NOT NULL,
+  `pickUpDate` date NOT NULL,
+  `dropOffDate` date NOT NULL,
+  `pickUpPlace` varchar(24) NOT NULL,
+  `dropOffPlace` varchar(24) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booked_flights_table`
+--
+
+CREATE TABLE `booked_flights_table` (
+  `ID` int(10) NOT NULL,
+  `clientID` int(8) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `departureDate` date NOT NULL,
+  `returnDate` date NOT NULL,
+  `flightNumber` varchar(24) NOT NULL,
+  `cabinClass` varchar(24) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booked_trains_table`
+--
+
+CREATE TABLE `booked_trains_table` (
+  `ID` int(10) NOT NULL,
+  `clientID` int(8) NOT NULL,
+  `trainID` int(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `departureDate` date NOT NULL,
+  `returnDate` date NOT NULL,
+  `coachType` varchar(10) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -51,9 +145,42 @@ CREATE TABLE `buses_table` (
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `class` varchar(10) NOT NULL,
-  `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_class_flights_table`
+--
+
+CREATE TABLE `business_class_flights_table` (
+  `ID` int(10) NOT NULL,
+  `flightNumber` varchar(24) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_class_flights_table`
+--
+
+INSERT INTO `business_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, `price`) VALUES
+(1, 'KQ483', 'Dar es Salaam International (DAR),Tanzania', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 32712),
+(2, 'KQ462', 'Dar es Salaam International (DAR),Tanzania', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 29744),
+(3, 'KQ487', 'Dar es Salaam International (DAR),Tanzania', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 46906),
+(4, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 32640),
+(5, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 36504),
+(6, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Dar es Salaam International (DAR),Tanzania', 48890),
+(7, 'KQ486', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Dar es Salaam International (DAR),Tanzania', 72210),
+(8, 'KQ490', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 29850),
+(9, 'KQ580', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 46500),
+(10, 'KQ608', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 26789),
+(11, 'KQ471', 'Kigali-Kigali International Airport (KGL),Rwanda', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 35860),
+(12, 'KQ479', 'Kigali-Kigali International Airport (KGL),Rwanda', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 39452),
+(13, 'KQ8681', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 31564),
+(14, 'KQ478', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 'Kigali-Kigali International Airport (KGL),Rwanda', 27542);
 
 -- --------------------------------------------------------
 
@@ -63,12 +190,12 @@ CREATE TABLE `buses_table` (
 
 CREATE TABLE `cars_table` (
   `vehicleIdentificationNumber` int(20) NOT NULL,
-  `countryName` varchar(45) NOT NULL,
-  `pickUp` varchar(255) NOT NULL,
-  `dropOff` varchar(255) NOT NULL,
+  `carBodyStyle` varchar(24) NOT NULL,
+  `carMake` varchar(24) NOT NULL,
+  `carModel` varchar(24) NOT NULL,
   `capacity` int(10) NOT NULL,
   `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `imageUrl` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -108,17 +235,36 @@ CREATE TABLE `destination_table` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `flights_table`
+-- Table structure for table `economy_class_flights_table`
 --
 
-CREATE TABLE `flights_table` (
-  `flightNumber` int(10) NOT NULL,
+CREATE TABLE `economy_class_flights_table` (
+  `ID` int(10) NOT NULL,
+  `flightNumber` varchar(24) NOT NULL,
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
-  `cabinClass` varchar(10) NOT NULL,
-  `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `economy_class_flights_table`
+--
+
+INSERT INTO `economy_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, `price`) VALUES
+(1, 'KQ483', 'Dar es Salaam International (DAR),Tanzania', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 22512),
+(2, 'KQ462', 'Dar es Salaam International (DAR),Tanzania', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 20944),
+(3, 'KQ487', 'Dar es Salaam International (DAR),Tanzania', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 31696),
+(4, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 20944),
+(5, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 21504),
+(6, 'KQ401', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 'Dar es Salaam International (DAR),Tanzania', 36288),
+(7, 'KQ486', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Dar es Salaam International (DAR),Tanzania', 59405),
+(8, 'KQ490', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 23675),
+(9, 'KQ580', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia', 36660),
+(10, 'KQ608', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 19335),
+(11, 'KQ471', 'Kigali-Kigali International Airport (KGL),Rwanda', 'Nairobi-Nairobi Jomo Kenyatta International (NBO),Kenya', 24416),
+(12, 'KQ479', 'Kigali-Kigali International Airport (KGL),Rwanda', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 31920),
+(13, 'KQ8681', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania', 26345),
+(14, 'KQ478', 'Mombasa - Mombasa Moi International Airport (MBA),Kenya', 'Kigali-Kigali International Airport (KGL),Rwanda', 20345);
 
 -- --------------------------------------------------------
 
@@ -266,13 +412,49 @@ CREATE TABLE `trains_table` (
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `coachType` varchar(10) NOT NULL,
-  `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `airports_and_airstrips_table`
+--
+ALTER TABLE `airports_and_airstrips_table`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `clientID` (`clientID`),
+  ADD KEY `busID` (`busID`);
+
+--
+-- Indexes for table `booked_cars_table`
+--
+ALTER TABLE `booked_cars_table`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `clientID` (`clientID`),
+  ADD KEY `vehicleIdentificationNumber` (`vehicleIdentificationNumber`);
+
+--
+-- Indexes for table `booked_flights_table`
+--
+ALTER TABLE `booked_flights_table`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `clientID` (`clientID`);
+
+--
+-- Indexes for table `booked_trains_table`
+--
+ALTER TABLE `booked_trains_table`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `clientID` (`clientID`),
+  ADD KEY `trainID` (`trainID`);
 
 --
 -- Indexes for table `booking_table`
@@ -288,6 +470,12 @@ ALTER TABLE `booking_table`
 --
 ALTER TABLE `buses_table`
   ADD PRIMARY KEY (`busID`);
+
+--
+-- Indexes for table `business_class_flights_table`
+--
+ALTER TABLE `business_class_flights_table`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `cars_table`
@@ -315,10 +503,10 @@ ALTER TABLE `destination_table`
   ADD KEY `countryID` (`countryID`);
 
 --
--- Indexes for table `flights_table`
+-- Indexes for table `economy_class_flights_table`
 --
-ALTER TABLE `flights_table`
-  ADD PRIMARY KEY (`flightNumber`);
+ALTER TABLE `economy_class_flights_table`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `hotels_table`
@@ -396,6 +584,36 @@ ALTER TABLE `trains_table`
 --
 
 --
+-- AUTO_INCREMENT for table `airports_and_airstrips_table`
+--
+ALTER TABLE `airports_and_airstrips_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_cars_table`
+--
+ALTER TABLE `booked_cars_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_flights_table`
+--
+ALTER TABLE `booked_flights_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_trains_table`
+--
+ALTER TABLE `booked_trains_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `booking_table`
 --
 ALTER TABLE `booking_table`
@@ -405,7 +623,13 @@ ALTER TABLE `booking_table`
 -- AUTO_INCREMENT for table `buses_table`
 --
 ALTER TABLE `buses_table`
-  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8457225460;
+  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `business_class_flights_table`
+--
+ALTER TABLE `business_class_flights_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `categories_table`
@@ -426,10 +650,10 @@ ALTER TABLE `destination_table`
   MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `flights_table`
+-- AUTO_INCREMENT for table `economy_class_flights_table`
 --
-ALTER TABLE `flights_table`
-  MODIFY `flightNumber` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2098616430;
+ALTER TABLE `economy_class_flights_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `hotels_table`
@@ -489,11 +713,38 @@ ALTER TABLE `tbl_review`
 -- AUTO_INCREMENT for table `trains_table`
 --
 ALTER TABLE `trains_table`
-  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4343567811;
+  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  ADD CONSTRAINT `booked_buses_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
+  ADD CONSTRAINT `booked_buses_table_ibfk_2` FOREIGN KEY (`busID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `booked_cars_table`
+--
+ALTER TABLE `booked_cars_table`
+  ADD CONSTRAINT `booked_cars_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
+  ADD CONSTRAINT `booked_cars_table_ibfk_2` FOREIGN KEY (`vehicleIdentificationNumber`) REFERENCES `cars_table` (`vehicleIdentificationNumber`);
+
+--
+-- Constraints for table `booked_flights_table`
+--
+ALTER TABLE `booked_flights_table`
+  ADD CONSTRAINT `booked_flights_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `booked_trains_table`
+--
+ALTER TABLE `booked_trains_table`
+  ADD CONSTRAINT `booked_trains_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
+  ADD CONSTRAINT `booked_trains_table_ibfk_2` FOREIGN KEY (`trainID`) REFERENCES `trains_table` (`trainID`);
 
 --
 -- Constraints for table `booking_table`
