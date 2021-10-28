@@ -7,7 +7,7 @@ if (isset($_GET['logout'])) {
     echo("<script>
       alert('Successfully logged out.');
       </script>");
-    header("location:../FRONT/login.html");
+    header("location:../FRONT/login.php");
 }
 
 ?>

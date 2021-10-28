@@ -48,19 +48,41 @@ function destroyCookie($cookieName){
 	setcookie($cookieName, "", $expired);
 }
 
-function verifyUser($varUsername, $varPassword){
+function verifyUser($varUsernameOrEmail, $varPassword){
 	$dbserver = "localhost";
 	$dbuser = "root";
 	$dbpass = "";
 	$dbname = "travelagency";
 	$dbport = dbPortInfo(); //Can be specified according to Developer's preferred or available port.
 
-	$sql="SELECT * FROM tbl_client where clientUName = '".$varUsername."'";
 	$conn = new mysqli($dbserver,$dbuser,$dbpass,$dbname,$dbport);
+	$sql="SELECT * FROM tbl_client where clientUName = '".$varUsernameOrEmail."'";
 	$result= $conn->query($sql);
 	if (mysqli_num_rows($result)==0) { 
-		echo '<script>alert("User not found! Try logging in again.");
-		window.location.href = "../FRONT/login.html";</script>';
+		$sql="SELECT * FROM tbl_client where clientEmail = '".$varUsernameOrEmail."'";
+		$result= $conn->query($sql);
+		if (mysqli_num_rows($result)==0) { 
+			echo '<script>alert("User not found! Try logging in again.");
+			window.location.href = "../FRONT/login.html";</script>';
+		} else{
+			while($res = mysqli_fetch_array($result)) {
+				$hashedPass = $res['clientPassword'];
+				$verify = password_verify($varPassword, $hashedPass);
+			  	if ($verify) {
+					$_SESSION['User']=$res['clientUName'];
+					$_SESSION['UserID']=$res['clientID'];
+					echo("<script>
+						window.location.href='../FRONT/welcomePage.php';
+						alert('Login Successful');
+						</script>");
+			  	} else {
+			  		echo("<script>
+						window.location.href='../FRONT/login.html';
+						alert('Please check your info and try again.');
+						</script>");
+			  	}
+			}
+		}
 	} else{
 		while($res = mysqli_fetch_array($result)) {
 			$hashedPass = $res['clientPassword'];
