@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ADMIN Login and Registration</title>
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="AdminHome.css">
+</head>
+<body style="background:url(a.jpg)no-repeat; background-size: cover; ">
+  <h1 style="text-align: center;font-weight: 1000;padding-top: 20px;color: black;">ADMIN LOGIN</h1>
+  <div class="container">
+    <div class="box">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 style="color: black;"> Admin Login Form</h2>
+        <form action="AdminLogin.php"  method="post">
+          <div class="form-group">
+          <label style="font-weight: 1000; color: black;">Username</label>
+          <input style="color: white; background-color: black;" type="text" name="Uname" class="form-control" required> 
+          </div>
+          <div class="form-group">
+          <label style="font-weight: 1000;color: black;">Email</label>
+          <input style="color: white; background-color: black;" type="Email" name="Email" class="form-control" required> 
+          </div>
+          <div class="form-group">
+            <label style="font-weight: 1000;color: black;">Password</label>
+            <input style="color: white; background-color: black;" type="Password" name="password" class="form-control"  required>
+          </div>
+          <button type="submit" name="admin" class="btn btn-primary">Register  </button>
+          <button class="bt btn-primary" name="home" >Home</button>
+         <!-- onclick="window.location.href='adminHome.html';"-->
+          
+        </form>
+      </div>
+
+      </div>
+      
+
+    </div>
+
+</body>
+</html>
