@@ -63,7 +63,7 @@ function verifyUser($varUsernameOrEmail, $varPassword){
 		$result= $conn->query($sql);
 		if (mysqli_num_rows($result)==0) { 
 			echo '<script>alert("User not found! Try logging in again.");
-			window.location.href = "../FRONT/login.html";</script>';
+			window.location.href = "../FRONT/login.php";</script>';
 		} else{
 			while($res = mysqli_fetch_array($result)) {
 				$hashedPass = $res['clientPassword'];
@@ -77,7 +77,7 @@ function verifyUser($varUsernameOrEmail, $varPassword){
 						</script>");
 			  	} else {
 			  		echo("<script>
-						window.location.href='../FRONT/login.html';
+						window.location.href='../FRONT/login.php';
 						alert('Please check your info and try again.');
 						</script>");
 			  	}
@@ -96,7 +96,7 @@ function verifyUser($varUsernameOrEmail, $varPassword){
 					</script>");
 		  	} else {
 		  		echo("<script>
-					window.location.href='../FRONT/login.html';
+					window.location.href='../FRONT/login.php';
 					alert('Please check your info and try again.');
 					</script>");
 		  	}

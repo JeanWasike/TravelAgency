@@ -18,10 +18,10 @@ if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['em
 		VALUES('$varFName','$varLName','$varUsername','$varPhone','$varEmail','$hashedPass',
 		'$varLocation')";
 	setData($sql_insert);
-	header('location:../FRONT/login.html');
+	header('location:../FRONT/login.php');
 } else{
 	echo("<script>
-		window.location.href='../FRONT/register.html';
+		window.location.href='../FRONT/register.php';
 		alert('Please check your info and try again.');
 		</script>");
 }
