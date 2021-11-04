@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Nov 04, 2021 at 08:01 AM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 04, 2021 at 06:35 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -59,6 +59,7 @@ CREATE TABLE `booked_buses_table` (
   `departureDate` date NOT NULL,
   `returnDate` date NOT NULL,
   `class` varchar(10) NOT NULL,
+  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -94,6 +95,7 @@ CREATE TABLE `booked_flights_table` (
   `returnDate` date NOT NULL,
   `flightNumber` varchar(24) NOT NULL,
   `cabinClass` varchar(24) NOT NULL,
+  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -106,12 +108,13 @@ CREATE TABLE `booked_flights_table` (
 CREATE TABLE `booked_trains_table` (
   `ID` int(10) NOT NULL,
   `clientID` int(8) NOT NULL,
-  `trainID` int(10) NOT NULL,
+  `train` varchar(10) NOT NULL,
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `departureDate` date NOT NULL,
   `returnDate` date NOT NULL,
   `coachType` varchar(10) NOT NULL,
+  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -299,6 +302,53 @@ INSERT INTO `economy_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `economy_class_trains_table`
+--
+
+CREATE TABLE `economy_class_trains_table` (
+  `trainID` int(10) NOT NULL,
+  `train` varchar(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `economy_class_trains_table`
+--
+
+INSERT INTO `economy_class_trains_table` (`trainID`, `train`, `from`, `to`, `price`) VALUES
+(1, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 1000),
+(2, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 1000),
+(3, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 400),
+(4, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 1335),
+(5, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 600),
+(6, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 2220);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `first_class_trains_table`
+--
+
+CREATE TABLE `first_class_trains_table` (
+  `trainID` int(10) NOT NULL,
+  `train` varchar(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `first_class_trains_table`
+--
+
+INSERT INTO `first_class_trains_table` (`trainID`, `train`, `from`, `to`, `price`) VALUES
+(1, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 3000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `flights_table`
 --
 
@@ -462,6 +512,36 @@ CREATE TABLE `paymethod_table` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `railway_stations_table`
+--
+
+CREATE TABLE `railway_stations_table` (
+  `ID` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `railway_stations_table`
+--
+
+INSERT INTO `railway_stations_table` (`ID`, `name`) VALUES
+(1, 'Nairobi Terminus,Kenya'),
+(2, 'Nairobi Terminus,Kenya'),
+(3, 'Mombasa Terminus,Kenya'),
+(4, 'Atikilt Tera,Ethiopia'),
+(5, 'Addis Ababa-Kality,Ethiopia'),
+(6, 'Tazara-Dar es Salaam,Tanzania'),
+(7, 'Arusha,Tanzania'),
+(8, 'Nairobi Terminus,Kenya'),
+(9, 'Mombasa Terminus,Kenya'),
+(10, 'Atikilt Tera,Ethiopia'),
+(11, 'Addis Ababa-Kality,Ethiopia'),
+(12, 'Tazara-Dar es Salaam,Tanzania'),
+(13, 'Arusha,Tanzania');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rooms_table`
 --
 
@@ -542,21 +622,6 @@ CREATE TABLE `tbl_review` (
   `reviewTimeCreated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `trains_table`
---
-
-CREATE TABLE `trains_table` (
-  `trainID` int(10) NOT NULL,
-  `from` varchar(255) NOT NULL,
-  `to` varchar(255) NOT NULL,
-  `coachType` varchar(10) NOT NULL,
-  `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 --
 -- Indexes for dumped tables
 --
@@ -595,8 +660,7 @@ ALTER TABLE `booked_flights_table`
 --
 ALTER TABLE `booked_trains_table`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `clientID` (`clientID`),
-  ADD KEY `trainID` (`trainID`);
+  ADD KEY `clientID` (`clientID`);
 
 --
 -- Indexes for table `booking_table`
@@ -649,6 +713,18 @@ ALTER TABLE `destination_table`
 --
 ALTER TABLE `economy_class_flights_table`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `economy_class_trains_table`
+--
+ALTER TABLE `economy_class_trains_table`
+  ADD PRIMARY KEY (`trainID`);
+
+--
+-- Indexes for table `first_class_trains_table`
+--
+ALTER TABLE `first_class_trains_table`
+  ADD PRIMARY KEY (`trainID`);
 
 --
 -- Indexes for table `flights_table`
@@ -704,6 +780,12 @@ ALTER TABLE `paymethod_table`
   ADD KEY `clientID` (`clientID`);
 
 --
+-- Indexes for table `railway_stations_table`
+--
+ALTER TABLE `railway_stations_table`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
@@ -729,14 +811,26 @@ ALTER TABLE `tbl_review`
   ADD KEY `clientID` (`clientID`);
 
 --
--- Indexes for table `trains_table`
---
-ALTER TABLE `trains_table`
-  ADD PRIMARY KEY (`trainID`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_flights_table`
+--
+ALTER TABLE `booked_flights_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_trains_table`
+--
+ALTER TABLE `booked_trains_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `booking_table`
@@ -767,6 +861,18 @@ ALTER TABLE `countries_table`
 --
 ALTER TABLE `destination_table`
   MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `economy_class_trains_table`
+--
+ALTER TABLE `economy_class_trains_table`
+  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `first_class_trains_table`
+--
+ALTER TABLE `first_class_trains_table`
+  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `flights_table`
@@ -811,6 +917,12 @@ ALTER TABLE `paymethod_table`
   MODIFY `paymentMethodID` int(255) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `railway_stations_table`
+--
+ALTER TABLE `railway_stations_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
@@ -835,14 +947,27 @@ ALTER TABLE `tbl_review`
   MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75035146;
 
 --
--- AUTO_INCREMENT for table `trains_table`
---
-ALTER TABLE `trains_table`
-  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4343567811;
-
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  ADD CONSTRAINT `booked_buses_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
+  ADD CONSTRAINT `booked_buses_table_ibfk_2` FOREIGN KEY (`busID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `booked_flights_table`
+--
+ALTER TABLE `booked_flights_table`
+  ADD CONSTRAINT `booked_flights_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `booked_trains_table`
+--
+ALTER TABLE `booked_trains_table`
+  ADD CONSTRAINT `booked_trains_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
 
 --
 -- Constraints for table `booking_table`
