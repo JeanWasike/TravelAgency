@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 28, 2021 at 04:32 PM
+-- Host: 127.0.0.1:3307
+-- Generation Time: Nov 04, 2021 at 08:01 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -145,7 +145,8 @@ CREATE TABLE `buses_table` (
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `class` varchar(10) NOT NULL,
-  `price` double NOT NULL
+  `price` double NOT NULL,
+  `imageUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -190,12 +191,12 @@ INSERT INTO `business_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, 
 
 CREATE TABLE `cars_table` (
   `vehicleIdentificationNumber` int(20) NOT NULL,
-  `carBodyStyle` varchar(24) NOT NULL,
-  `carMake` varchar(24) NOT NULL,
-  `carModel` varchar(24) NOT NULL,
+  `countryName` varchar(45) NOT NULL,
+  `pickUp` varchar(255) NOT NULL,
+  `dropOff` varchar(255) NOT NULL,
   `capacity` int(10) NOT NULL,
   `price` double NOT NULL,
-  `imageUrl` varchar(255) DEFAULT NULL
+  `imageUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -220,6 +221,17 @@ CREATE TABLE `countries_table` (
   `countryName` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `countries_table`
+--
+
+INSERT INTO `countries_table` (`countryID`, `countryName`) VALUES
+(1, 'Kenya'),
+(2, 'Ethiopia'),
+(4, 'Tanzania'),
+(6, 'Rwanda'),
+(7, 'Zambia');
+
 -- --------------------------------------------------------
 
 --
@@ -231,6 +243,24 @@ CREATE TABLE `destination_table` (
   `destName` varchar(100) NOT NULL,
   `countryID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `destination_table`
+--
+
+INSERT INTO `destination_table` (`destID`, `destName`, `countryID`) VALUES
+(1, 'Maasai Mara', 1),
+(2, 'Nairobi City', 1),
+(3, 'Mombasa - Coast', 1),
+(4, 'Mount Kilimanjaro', 4),
+(5, 'Serengeti National Park', 4),
+(6, 'Zanzibar', 4),
+(7, 'Addis Ababa', 2),
+(8, 'Bahir Dar', 2),
+(9, 'Bishoftu', 2),
+(10, 'Lake Kivu', 6),
+(11, 'Kigali Genocide Memorial', 6),
+(12, 'The Savannas of Akagera National Park', 6);
 
 -- --------------------------------------------------------
 
@@ -269,6 +299,21 @@ INSERT INTO `economy_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `flights_table`
+--
+
+CREATE TABLE `flights_table` (
+  `flightNumber` int(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `cabinClass` varchar(10) NOT NULL,
+  `price` double NOT NULL,
+  `imageUrl` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotels_table`
 --
 
@@ -276,8 +321,77 @@ CREATE TABLE `hotels_table` (
   `hotelID` bigint(255) NOT NULL,
   `hotelName` varchar(100) NOT NULL,
   `hotelAddress` varchar(100) NOT NULL,
-  `hotelImage` varchar(100) NOT NULL,
+  `hotelImage` varchar(500) NOT NULL,
   `destID` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hotels_table`
+--
+
+INSERT INTO `hotels_table` (`hotelID`, `hotelName`, `hotelAddress`, `hotelImage`, `destID`) VALUES
+(1, 'The Voyager Beach Resort', ' Off Mt Kenya Road, Mombasa', 'https://lh3.googleusercontent.com/p/AF1QipOQLbd-viPcBO-RI5sUzd-DS7WABTy3vb02tuZE=w296-h202-n-k-rw-no-v1', 3),
+(2, 'PrideInn Paradise Beach Resort and Spa', ' Serena Rd, Mombasa', 'https://lh5.googleusercontent.com/proxy/IG80PUgUw4FU4m_TK6UYISlL_WDONACTKwVSpweaIqcIUeoiBFiovSD3TFu0Ju89ydtw23Dil_N-Qb8admYRiBPADxmoWkZh3J0DlEFjJ37bK_qBrbPjuEkFFZcJHHn32HsqY5ypJkeawMUZH4GDHvdJPNPI2g=w325-h216-k-no', 3),
+(3, 'The Reef Hotel Mombasa', 'Mount Kenya Road, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3),
+(4, 'Sarova Whitesands Beach Resort and Spa', 'Off Malindi Road, Mombasa County, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3),
+(5, 'Serena Beach Resort and Spa', 'Shanzu, 00100 Shanzu, Kenya ', 'https://cf.bstatic.com/xdata/images/hotel/max200/280001666.jpg?k=79952bdca8ea7968ccb87f6d80754cd472facac75df9378d109c9f817a9f28a7&o=&hp=1', 3),
+(6, 'Leopard Hill', ' Mara Naboisho, 00100 Naboisho, Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/216259311.jpg?k=6eb5da85abde55d0064f440f3de41dbbd91431333b17b1321bcd93efa12a6aba&o=&hp=1', 1),
+(7, 'Olare Mara Kempinski Masai Mara', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1),
+(8, 'Neptune Mara Rianta Luxury Camp', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1),
+(9, 'Fairmont Mara Safari Club', 'Fairmont Mara Safari Club, 58581, Mara Safari Club, Aitong, Kenya', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/ee/e5/f2/fairmont-mara-safari.jpg?w=900&h=-1&s=1', 1),
+(10, 'Royal Mara Safari Lodge', 'Mara North Conservancy\r\n ', 'https://lh6.googleusercontent.com/proxy/TeZ0snnqhsO0bJImnPNesSAUgFKX0ifrexURSvxOthBa6noymEwIggWrFwEOpYZ8ilUCfEV81CuyplElbS71Yxq-HzjJt4MJMmKbFbHu-Vioz8aDtxy0Qvnxywm_pcuETcONaZK3KxTF-Q1Re4dWCPd6iMe70g=w325-h175-k-no', 1),
+(11, 'Sankara Nairobi', '05 Woodvale Grove, Nairobi', 'https://lh5.googleusercontent.com/p/AF1QipOoAehtuzXK1NB5tvpUQIkIA3K8lTPcf2urbEws=w325-h216-k-no', 2),
+(12, 'Villa Rosa Kempinski Nairobi', 'Chiromo Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2),
+(13, 'Radisson Blu Hotel and Residence', 'Elgon Road', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2),
+(14, 'Tamarind Tree Hotel', 'Langata Link Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOzmaXQqM77BPFpR7CGgTrRYUsEVIxSR4zOHSw=w296-h202-n-k-rw-no-v1', 2),
+(15, 'Hemingways Nairobi', 'Karen Mbagathi Ridge', 'https://lh5.googleusercontent.com/p/AF1QipMz2lbBWgHv6Z6yZjWgPZas4ztBhbsmSCQUKbU6=w325-h216-k-no', 2),
+(16, 'Babylon Lodge', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/N_eR-c7O_I3tRi44UHGjGS6HcYFlcJ8CJo_yRyQnqxyRb8ggghHW4qg8MbXwnd_NCrlcH6VlfApaO8DGbiSR23LoB4egdegRc8T5eEUeH3thenCgTzDROpXB5PCmG4fV6hO39wX4VZMtQffGQsuED4RiyTIT_w=w325-h221-k-no', 4),
+(17, 'Kilimanjaro Resort Loitokitok', 'Outward Bound Road, 00209 Oloitokitok , Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/170747358.jpg?k=2a7b683b8345657ed5e397bf9c2e6bcb633bc02a22483c28610934d3c7c324f8&o=&hp=1', 4),
+(18, 'Mount Kilimanjaro View Lodge', 'Shimbwe Juju Village, 15 Km from Moshi, Moshi, Tanzania', 'https://lh4.googleusercontent.com/proxy/XmwbPA635_RPVlxUt09tNbbh8BNejQDVszchQuUzL88fJ3-RddI_RcEnOVOIn7vwVzw3p5ovxjLpu7dADvfR_yPNuoZNW50HGoleVhG1lw9hl5VNda381Pw7orm5oL8wTOJhB6NbAqsLoZhvXxDdMxCLTm5_r8k=w325-h243-k-no', 4),
+(19, 'Satao Elerai', 'Amboseli National Park Headquarters', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4),
+(20, 'Aishi Machame Hotel', 'Nyamuma Hills Serengeti National Park Serengeti TZ, 01184, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4),
+(21, 'Serengeti Mawe Tented Camp', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/-WwIWXrc2LTOotUsTYAudbGJtFopnT69T60i96RAOQ-aK6Qvh46WpYdvvo-_lbKploxEkJSsDDADx_mss5tjCw7UkpRgYQVwLxVRHoibYm5tkEga9gLa82ms2Oh2KhImQo_PX5EazHThdItRG7dTCCg2UPhZqA=w325-h216-k-no', 5),
+(22, 'Melia Serengeti Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzania', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/a1/07/45/the-infinity-pool.jpg?w=1000&h=-1&s=1', 5),
+(23, 'Lobo Wildlife Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzani', 'https://exp.cdn-hotels.com/hotels/22000000/21560000/21558100/21558058/b2daae77_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5),
+(24, 'Mbuzi Mawe Serena Camp', 'Central Serengeti Corridor, Serengeti National Park, TZ, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipM-g97EEYMuYr0C3eh3oIVAdVHEcOCCnRof1RUU=w325-h216-k-no', 5),
+(25, 'Serengeti Simba Lodge', 'Ikoma Wima, Serengeti National Park, Serengeti National Park, Tanzania', 'https://exp.cdn-hotels.com/hotels/22000000/21540000/21538200/21538175/334fe374_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5),
+(26, 'Drifters Zanzibar', 'PO Box 791 Zanzibar, Paje, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOrd2GLvpzZjftj_sq4ONnbFSOy92HkGCgkpvO8=w325-h182-k-no', 6),
+(27, 'Moja Tuu Luxury Villas', 'North East Coast Area Kiwengwa Zanzibar, Tanzania', 'https://lh4.googleusercontent.com/proxy/gNYvkXH5z7BB9hl1ZLoi_KhatiQT5PkrhJWF0l5LZNOTT2VmAx8WkKdOXsM2Iqqmp-jyzpu79oXJmwQBZ-F1tDJThIEZYEWql_CVaQ7AACFwZ-ZvyXnC7kEo0EjgnoBivhWU85QZZ2JjTm5_eG8_zYkaK4dG7g=w325-h216-k-no', 6),
+(28, 'Zanzibar Beach Resort', 'Mazizini Kilimani, Zanzibar 2586, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOqujgm6u0URBIcjw5B_4rhoWmViHPKCtBJwlZ-=w325-h216-k-no', 6),
+(29, 'Filao Beach Zanzibar', 'Chwaka Bay, East Coast Zanzibar City, Michamvi Beach Track, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipN2edX8wn0WIz3buxc7FKwNgxYjzE8xDNcuDHTA=w325-h216-k-no', 6),
+(30, 'Hotel Verde Zanzibar', 'Malawi Rd, Zanzibar, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipMEu2wvNl9se5j1s4g9smz_-BhuV1424D3Q-k7y=w325-h182-k-no', 6),
+(31, 'The Grand Palace Suites Hotel', 'Guinea Conakry St, Addis Ababa 5710, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNawHhPDAsdSQRPCLtWPQr0LgEiOokm3LKOZdKF=w325-h386-k-no', 7),
+(32, 'Radisson Blu Hotel', 'Kazanchis Business District Kirkos Subcity 17/18 Addis Ababa, 1000, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipOzeHHmpxbtLsNqCqzkCUzBZU63oPWlx_F2Ks4h=w325-h216-k-no', 7),
+(33, 'Capital Hotel and Spa', '22 Haile Gebre Silase St Addis Ababa ET 1878, Haile Gebre Silase St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipN1KgdZGFyjiCa6ByMlx464IprIWduj7o4gur-v=w325-h216-k-no', 7),
+(34, 'Best Western Plus Pearl Addis', 'Cameroon St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNxCk9rSTfPK-BOjNFlfbFUcA93kUVnUoSXtSJi=w325-h216-k-no', 7),
+(35, 'Golden Tulip Addis Ababa Hotel', 'Cameroon St, Addis Ababa 5623, Ethiopia', 'https://lh3.googleusercontent.com/proxy/wV-DBreM7-abDsSkwp3r6RSfxsxwwCiTXVxu8FRlK2ssZvg79qnVeXgoiqGwqXmLSV1QeZ2iRZIm2kpx6HxTYgL23XJ9inLQT3jBmx-dFokUZRDJ_RpwNtMYOXOBU2Ldkpq1PDSPdQUndqRWDtyBxUlSiKExR1c=w325-h275-k-no', 7),
+(36, 'Jacaranda Hotel', 'In front of old regional stadium, 1890 Bahir Dar, Ethiopia', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/236449766.jpg?k=ac11d0671166e55ab0eee492ac6f549f47c0d91fee4cb44737d01c8044f01b25&o=&hp=1', 8),
+(37, 'Delano Hotel and Spa', 'Kebele 15, Bahir Dar, 1338, Ethiopia', 'https://exp.cdn-hotels.com/hotels/18000000/17760000/17756200/17756147/4bfb79ac_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 8),
+(38, 'Rahnile Hotel', 'kebele 05, Behind EEPCO building, Bahir Dar, Ethiopia\r\n', 'https://lh5.googleusercontent.com/p/AF1QipPLNri9I_WpUdH16bf8OgXfLUo5hrtNu_2wioA=w325-h216-k-no', 8),
+(39, 'Kakemark Hotel', 'Felege Hiwot Rd, Bahir Dar, Ethiopia', 'https://lh5.googleusercontent.com/proxy/Z--bztX-h3bdmcIJp4THp2q7MDO8j9Hhqmal8kD988EbTf-QLen22WtZWqu8K0gKTc5A974wKEfIMUNwRXczeUPPH_1URHptIKVNlnCSH0Qpeq_04H_-vERvSHIvd4nmGQWNrWKNHswqmB7lFqMDOj6QcX3zLTU=w325-h216-k-no', 8),
+(40, 'Homland Hotel', ' Ethiopia , Bhair Dar, Bahir Dar, Ethiopia\r\n', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/222466968.jpg?k=b7f1a332fc571f914b3845d9f0d20de4a3beb81cc3acdcb1f09f36c66ec75c24&o=&hp=1', 8),
+(41, 'Babogaya Lake Viewpoint Lodge', 'Kebele 15 House 571, Debre Zeyit, 4000, Ethiopia', 'https://exp.cdn-hotels.com/hotels/6000000/5640000/5631800/5631762/46d81fb6_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 9),
+(42, 'Liesak Resport Hotel', 'Guda Lake, Bishoftu, Ethiopia\r\n', 'https://lh5.googleusercontent.com/proxy/V2DDTGbxHvaG5jpnmtBZfaULzIfdNwHfRxKnPsUzf1kR1g9Y8s6aXSAFeYnLvOXrrHTj39vw1gfiGjI1Yo-X3N05tfsMZxQKl9tBYMcm-t2NeHtuBJMIsadLLexFzJph6Xye_CXhBq_2jMtbicXWKx_B1D-OEA=w325-h222-k-no', 9),
+(43, 'Crown Hotel', 'Kaliti, Akaky Kaliti, Addis Ababa, Ethiopia', 'https://pix8.agoda.net/hotelImages/535/535622/535622_13101718590017054121.jpg?s=1024x768', 9),
+(44, 'Beacon Hotel', 'Saris Abo W18 House Number 1822 P.O.Box 1046, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNKtP-m8hqbJ07jdCdTP0Mmvbr0lwEQPe77TDhS=w325-h216-k-no', 9),
+(45, 'Asham Africa Hotel', 'Bishoftu,1000, Ethiopia', 'https://lh5.googleusercontent.com/proxy/qU4H2s84dYXNZr5bvhIfIEEtISMIQr0maDHzIGuRZzYcveW5rcBZTIeyvbCjc5sMIcAJUTgXXTnaqa87OvaPSEZqTp2G2bVjJs7lRe7GjD12Sv3hAfRIeWUO6AQfolLwEk1ft7dAleJtUn0Jh-R9N_l_GLwHvVg=w325-h215-k-no', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hotel_amenities_table`
+--
+
+CREATE TABLE `hotel_amenities_table` (
+  `amenityID` int(10) NOT NULL,
+  `internetAvailability` varchar(45) DEFAULT NULL,
+  `parkingAailability` varchar(45) DEFAULT NULL,
+  `pool` enum('yes','no') DEFAULT NULL,
+  `spa` enum('yes','no') DEFAULT NULL,
+  `meals` varchar(45) DEFAULT NULL,
+  `airConditioning` enum('yes','no') DEFAULT NULL,
+  `healthFacilities` varchar(45) DEFAULT NULL,
+  `hotelID` bigint(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -301,13 +415,14 @@ CREATE TABLE `images_table` (
 
 CREATE TABLE `package_table` (
   `packageID` int(255) NOT NULL,
+  `packageDescription` varchar(100) NOT NULL,
   `hotelID` bigint(255) NOT NULL,
   `roomID` int(10) NOT NULL,
   `pricePerGuest` double NOT NULL,
   `totalPrice` double NOT NULL,
   `checkInDate` date NOT NULL,
   `checkOutDate` date NOT NULL,
-  `status` varchar(25) NOT NULL,
+  `status` enum('Booked',' Available') NOT NULL,
   `categoryID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -357,6 +472,25 @@ CREATE TABLE `rooms_table` (
   `noOfGuests` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `rooms_table`
+--
+
+INSERT INTO `rooms_table` (`roomID`, `roomType`, `roomDescription`, `noOfGuests`) VALUES
+(1, 'Single Room', 'One bed only', 1),
+(2, 'Standard Double Room', 'Onedouble bed', 2),
+(3, 'Deluxe Double Room', 'One double bed with ample space and beautiful views', 2),
+(4, 'Superior Double Room', 'One double bed and an extra single bed', 3),
+(5, 'Sea View Room', 'One double bed with a sea view', 2),
+(6, 'Double Tent', 'A tent for two people', 2),
+(7, 'Tent', 'A tent that fits one person', 1),
+(8, 'Executive Room', 'One double bed for business', 2),
+(9, 'Family Room', 'One  double bed and two other beds for children', 4),
+(10, 'HoneyMoon Suite', 'One double bed for honeymooners', 2),
+(11, 'Studio Suite', 'One bed only fits one person', 1),
+(12, 'King Room', 'One large king-sized bed', 2),
+(13, 'Triple Room', 'One double bed and one standard bed', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -389,6 +523,13 @@ CREATE TABLE `tbl_client` (
   `clientLocation` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tbl_client`
+--
+
+INSERT INTO `tbl_client` (`clientID`, `clientFName`, `clientLName`, `clientUName`, `clientPhone`, `clientEmail`, `clientPassword`, `clientLocation`) VALUES
+(84575460, 'John', 'Doe', 'jdoe', '0711111111', 'jdoe@gmail.com', '$2y$10$9ZyY4SueFBDBt5JscaS2DOmx8ihKXh44rC5ipB8D74G2JR16PGxxS', 'Nairobi');
+
 -- --------------------------------------------------------
 
 --
@@ -412,7 +553,8 @@ CREATE TABLE `trains_table` (
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `coachType` varchar(10) NOT NULL,
-  `price` double NOT NULL
+  `price` double NOT NULL,
+  `imageUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -509,11 +651,24 @@ ALTER TABLE `economy_class_flights_table`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `flights_table`
+--
+ALTER TABLE `flights_table`
+  ADD PRIMARY KEY (`flightNumber`);
+
+--
 -- Indexes for table `hotels_table`
 --
 ALTER TABLE `hotels_table`
   ADD PRIMARY KEY (`hotelID`),
   ADD KEY `destID` (`destID`);
+
+--
+-- Indexes for table `hotel_amenities_table`
+--
+ALTER TABLE `hotel_amenities_table`
+  ADD PRIMARY KEY (`amenityID`),
+  ADD KEY `hotelID` (`hotelID`);
 
 --
 -- Indexes for table `images_table`
@@ -584,36 +739,6 @@ ALTER TABLE `trains_table`
 --
 
 --
--- AUTO_INCREMENT for table `airports_and_airstrips_table`
---
-ALTER TABLE `airports_and_airstrips_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `booked_buses_table`
---
-ALTER TABLE `booked_buses_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `booked_cars_table`
---
-ALTER TABLE `booked_cars_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `booked_flights_table`
---
-ALTER TABLE `booked_flights_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `booked_trains_table`
---
-ALTER TABLE `booked_trains_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `booking_table`
 --
 ALTER TABLE `booking_table`
@@ -623,13 +748,7 @@ ALTER TABLE `booking_table`
 -- AUTO_INCREMENT for table `buses_table`
 --
 ALTER TABLE `buses_table`
-  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `business_class_flights_table`
---
-ALTER TABLE `business_class_flights_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8457225460;
 
 --
 -- AUTO_INCREMENT for table `categories_table`
@@ -641,25 +760,31 @@ ALTER TABLE `categories_table`
 -- AUTO_INCREMENT for table `countries_table`
 --
 ALTER TABLE `countries_table`
-  MODIFY `countryID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `countryID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `destination_table`
 --
 ALTER TABLE `destination_table`
-  MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `economy_class_flights_table`
+-- AUTO_INCREMENT for table `flights_table`
 --
-ALTER TABLE `economy_class_flights_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+ALTER TABLE `flights_table`
+  MODIFY `flightNumber` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2098616430;
 
 --
 -- AUTO_INCREMENT for table `hotels_table`
 --
 ALTER TABLE `hotels_table`
-  MODIFY `hotelID` bigint(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `hotelID` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `hotel_amenities_table`
+--
+ALTER TABLE `hotel_amenities_table`
+  MODIFY `amenityID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `images_table`
@@ -689,7 +814,7 @@ ALTER TABLE `paymethod_table`
 -- AUTO_INCREMENT for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
-  MODIFY `roomID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `roomID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_admin`
@@ -701,7 +826,7 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_client`
 --
 ALTER TABLE `tbl_client`
-  MODIFY `clientID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84575460;
+  MODIFY `clientID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84575461;
 
 --
 -- AUTO_INCREMENT for table `tbl_review`
@@ -713,38 +838,11 @@ ALTER TABLE `tbl_review`
 -- AUTO_INCREMENT for table `trains_table`
 --
 ALTER TABLE `trains_table`
-  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4343567811;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `booked_buses_table`
---
-ALTER TABLE `booked_buses_table`
-  ADD CONSTRAINT `booked_buses_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
-  ADD CONSTRAINT `booked_buses_table_ibfk_2` FOREIGN KEY (`busID`) REFERENCES `tbl_client` (`clientID`);
-
---
--- Constraints for table `booked_cars_table`
---
-ALTER TABLE `booked_cars_table`
-  ADD CONSTRAINT `booked_cars_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
-  ADD CONSTRAINT `booked_cars_table_ibfk_2` FOREIGN KEY (`vehicleIdentificationNumber`) REFERENCES `cars_table` (`vehicleIdentificationNumber`);
-
---
--- Constraints for table `booked_flights_table`
---
-ALTER TABLE `booked_flights_table`
-  ADD CONSTRAINT `booked_flights_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
-
---
--- Constraints for table `booked_trains_table`
---
-ALTER TABLE `booked_trains_table`
-  ADD CONSTRAINT `booked_trains_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
-  ADD CONSTRAINT `booked_trains_table_ibfk_2` FOREIGN KEY (`trainID`) REFERENCES `trains_table` (`trainID`);
 
 --
 -- Constraints for table `booking_table`
@@ -765,6 +863,12 @@ ALTER TABLE `destination_table`
 --
 ALTER TABLE `hotels_table`
   ADD CONSTRAINT `hotels_table_ibfk_1` FOREIGN KEY (`destID`) REFERENCES `destination_table` (`destID`);
+
+--
+-- Constraints for table `hotel_amenities_table`
+--
+ALTER TABLE `hotel_amenities_table`
+  ADD CONSTRAINT `hotel_amenities_table_ibfk_1` FOREIGN KEY (`hotelID`) REFERENCES `hotels_table` (`hotelID`);
 
 --
 -- Constraints for table `images_table`
