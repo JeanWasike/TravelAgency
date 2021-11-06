@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 04, 2021 at 06:35 PM
+-- Host: 127.0.0.1:3307
+-- Generation Time: Nov 06, 2021 at 05:16 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -59,7 +59,6 @@ CREATE TABLE `booked_buses_table` (
   `departureDate` date NOT NULL,
   `returnDate` date NOT NULL,
   `class` varchar(10) NOT NULL,
-  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -95,7 +94,6 @@ CREATE TABLE `booked_flights_table` (
   `returnDate` date NOT NULL,
   `flightNumber` varchar(24) NOT NULL,
   `cabinClass` varchar(24) NOT NULL,
-  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -108,13 +106,12 @@ CREATE TABLE `booked_flights_table` (
 CREATE TABLE `booked_trains_table` (
   `ID` int(10) NOT NULL,
   `clientID` int(8) NOT NULL,
-  `train` varchar(10) NOT NULL,
+  `trainID` int(10) NOT NULL,
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
   `departureDate` date NOT NULL,
   `returnDate` date NOT NULL,
   `coachType` varchar(10) NOT NULL,
-  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -212,6 +209,16 @@ CREATE TABLE `categories_table` (
   `categoryID` int(10) NOT NULL,
   `categoryName` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories_table`
+--
+
+INSERT INTO `categories_table` (`categoryID`, `categoryName`) VALUES
+(1, 'Family Package'),
+(2, 'Friends Getaway'),
+(3, 'HoneyMoon Package'),
+(4, 'Solo Retreat');
 
 -- --------------------------------------------------------
 
@@ -323,6 +330,12 @@ INSERT INTO `economy_class_trains_table` (`trainID`, `train`, `from`, `to`, `pri
 (3, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 400),
 (4, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 1335),
 (5, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 600),
+(6, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 2220),
+(1, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 1000),
+(2, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 1000),
+(3, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 400),
+(4, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 1335),
+(5, 'K3', 'Addis Ababa-Kality,Ethiopia', 'Atikilt Tera,Ethiopia', 600),
 (6, 'L17', 'Tazara-Dar es Salaam,Tanzania', 'Arusha', 2220);
 
 -- --------------------------------------------------------
@@ -344,6 +357,7 @@ CREATE TABLE `first_class_trains_table` (
 --
 
 INSERT INTO `first_class_trains_table` (`trainID`, `train`, `from`, `to`, `price`) VALUES
+(1, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 3000),
 (1, 'E2', 'Nairobi Terminus,Kenya', 'Mombasa Terminus,Kenya', 3000);
 
 -- --------------------------------------------------------
@@ -424,7 +438,9 @@ INSERT INTO `hotels_table` (`hotelID`, `hotelName`, `hotelAddress`, `hotelImage`
 (42, 'Liesak Resport Hotel', 'Guda Lake, Bishoftu, Ethiopia\r\n', 'https://lh5.googleusercontent.com/proxy/V2DDTGbxHvaG5jpnmtBZfaULzIfdNwHfRxKnPsUzf1kR1g9Y8s6aXSAFeYnLvOXrrHTj39vw1gfiGjI1Yo-X3N05tfsMZxQKl9tBYMcm-t2NeHtuBJMIsadLLexFzJph6Xye_CXhBq_2jMtbicXWKx_B1D-OEA=w325-h222-k-no', 9),
 (43, 'Crown Hotel', 'Kaliti, Akaky Kaliti, Addis Ababa, Ethiopia', 'https://pix8.agoda.net/hotelImages/535/535622/535622_13101718590017054121.jpg?s=1024x768', 9),
 (44, 'Beacon Hotel', 'Saris Abo W18 House Number 1822 P.O.Box 1046, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNKtP-m8hqbJ07jdCdTP0Mmvbr0lwEQPe77TDhS=w325-h216-k-no', 9),
-(45, 'Asham Africa Hotel', 'Bishoftu,1000, Ethiopia', 'https://lh5.googleusercontent.com/proxy/qU4H2s84dYXNZr5bvhIfIEEtISMIQr0maDHzIGuRZzYcveW5rcBZTIeyvbCjc5sMIcAJUTgXXTnaqa87OvaPSEZqTp2G2bVjJs7lRe7GjD12Sv3hAfRIeWUO6AQfolLwEk1ft7dAleJtUn0Jh-R9N_l_GLwHvVg=w325-h215-k-no', 9);
+(45, 'Asham Africa Hotel', 'Bishoftu,1000, Ethiopia', 'https://lh5.googleusercontent.com/proxy/qU4H2s84dYXNZr5bvhIfIEEtISMIQr0maDHzIGuRZzYcveW5rcBZTIeyvbCjc5sMIcAJUTgXXTnaqa87OvaPSEZqTp2G2bVjJs7lRe7GjD12Sv3hAfRIeWUO6AQfolLwEk1ft7dAleJtUn0Jh-R9N_l_GLwHvVg=w325-h215-k-no', 9),
+(46, 'Lake Kivu Serena Hotel', 'Gisenyi Rwanda, Gisenyi, 00100, Rwanda', 'https://exp.cdn-hotels.com/hotels/3000000/2390000/2384400/2384396/e9d21494_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 10),
+(47, 'Gorillas Lake Kivu Hotel', 'Beach Road, Gisenyi, Rwanda', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/42541114.jpg?k=11ec41d109d7729f3cba191ed82174e4f86e53e4b660d6b45c73a86ace5fe8d8&o=&hp=', 10);
 
 -- --------------------------------------------------------
 
@@ -468,13 +484,26 @@ CREATE TABLE `package_table` (
   `packageDescription` varchar(100) NOT NULL,
   `hotelID` bigint(255) NOT NULL,
   `roomID` int(10) NOT NULL,
+  `noOfGuests` int(100) NOT NULL,
   `pricePerGuest` double NOT NULL,
-  `totalPrice` double NOT NULL,
+  `noOfDays` int(100) NOT NULL,
   `checkInDate` date NOT NULL,
   `checkOutDate` date NOT NULL,
   `status` enum('Booked',' Available') NOT NULL,
   `categoryID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `package_table`
+--
+
+INSERT INTO `package_table` (`packageID`, `packageDescription`, `hotelID`, `roomID`, `noOfGuests`, `pricePerGuest`, `noOfDays`, `checkInDate`, `checkOutDate`, `status`, `categoryID`) VALUES
+(3, 'Suitable for a friends getaway at the beautiful coast of Kenya', 1, 2, 2, 8849, 2, '2021-11-20', '2021-11-22', ' Available', 2),
+(4, 'A nice retreat in the wild for friends or a couple', 6, 6, 2, 57186.5, 2, '2021-11-20', '2021-11-22', ' Available', 2),
+(5, 'Ideal place to have a staycation for friends in the city', 11, 4, 3, 14156, 1, '2021-11-20', '2021-11-21', ' Available', 2),
+(6, 'Ideal for a weekend away in the mountain', 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2),
+(7, 'Enjoy the coastal town of Zanzibar with your friends', 26, 2, 2, 3063, 2, '2021-11-27', '2021-11-29', ' Available', 2),
+(8, 'Enjoy a beautiful weekend in Ethiopia', 31, 2, 2, 3787, 2, '2021-11-27', '2021-11-29', ' Available', 2);
 
 -- --------------------------------------------------------
 
@@ -525,6 +554,19 @@ CREATE TABLE `railway_stations_table` (
 --
 
 INSERT INTO `railway_stations_table` (`ID`, `name`) VALUES
+(1, 'Nairobi Terminus,Kenya'),
+(2, 'Nairobi Terminus,Kenya'),
+(3, 'Mombasa Terminus,Kenya'),
+(4, 'Atikilt Tera,Ethiopia'),
+(5, 'Addis Ababa-Kality,Ethiopia'),
+(6, 'Tazara-Dar es Salaam,Tanzania'),
+(7, 'Arusha,Tanzania'),
+(8, 'Nairobi Terminus,Kenya'),
+(9, 'Mombasa Terminus,Kenya'),
+(10, 'Atikilt Tera,Ethiopia'),
+(11, 'Addis Ababa-Kality,Ethiopia'),
+(12, 'Tazara-Dar es Salaam,Tanzania'),
+(13, 'Arusha,Tanzania'),
 (1, 'Nairobi Terminus,Kenya'),
 (2, 'Nairobi Terminus,Kenya'),
 (3, 'Mombasa Terminus,Kenya'),
@@ -622,6 +664,21 @@ CREATE TABLE `tbl_review` (
   `reviewTimeCreated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trains_table`
+--
+
+CREATE TABLE `trains_table` (
+  `trainID` int(10) NOT NULL,
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL,
+  `coachType` varchar(10) NOT NULL,
+  `price` double NOT NULL,
+  `imageUrl` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -660,7 +717,8 @@ ALTER TABLE `booked_flights_table`
 --
 ALTER TABLE `booked_trains_table`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `clientID` (`clientID`);
+  ADD KEY `clientID` (`clientID`),
+  ADD KEY `trainID` (`trainID`);
 
 --
 -- Indexes for table `booking_table`
@@ -713,18 +771,6 @@ ALTER TABLE `destination_table`
 --
 ALTER TABLE `economy_class_flights_table`
   ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `economy_class_trains_table`
---
-ALTER TABLE `economy_class_trains_table`
-  ADD PRIMARY KEY (`trainID`);
-
---
--- Indexes for table `first_class_trains_table`
---
-ALTER TABLE `first_class_trains_table`
-  ADD PRIMARY KEY (`trainID`);
 
 --
 -- Indexes for table `flights_table`
@@ -780,12 +826,6 @@ ALTER TABLE `paymethod_table`
   ADD KEY `clientID` (`clientID`);
 
 --
--- Indexes for table `railway_stations_table`
---
-ALTER TABLE `railway_stations_table`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
@@ -811,26 +851,14 @@ ALTER TABLE `tbl_review`
   ADD KEY `clientID` (`clientID`);
 
 --
+-- Indexes for table `trains_table`
+--
+ALTER TABLE `trains_table`
+  ADD PRIMARY KEY (`trainID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `booked_buses_table`
---
-ALTER TABLE `booked_buses_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `booked_flights_table`
---
-ALTER TABLE `booked_flights_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `booked_trains_table`
---
-ALTER TABLE `booked_trains_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `booking_table`
@@ -848,7 +876,7 @@ ALTER TABLE `buses_table`
 -- AUTO_INCREMENT for table `categories_table`
 --
 ALTER TABLE `categories_table`
-  MODIFY `categoryID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `categoryID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `countries_table`
@@ -863,18 +891,6 @@ ALTER TABLE `destination_table`
   MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `economy_class_trains_table`
---
-ALTER TABLE `economy_class_trains_table`
-  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `first_class_trains_table`
---
-ALTER TABLE `first_class_trains_table`
-  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `flights_table`
 --
 ALTER TABLE `flights_table`
@@ -884,7 +900,7 @@ ALTER TABLE `flights_table`
 -- AUTO_INCREMENT for table `hotels_table`
 --
 ALTER TABLE `hotels_table`
-  MODIFY `hotelID` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `hotelID` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `hotel_amenities_table`
@@ -902,7 +918,7 @@ ALTER TABLE `images_table`
 -- AUTO_INCREMENT for table `package_table`
 --
 ALTER TABLE `package_table`
-  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `payment_table`
@@ -915,12 +931,6 @@ ALTER TABLE `payment_table`
 --
 ALTER TABLE `paymethod_table`
   MODIFY `paymentMethodID` int(255) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `railway_stations_table`
---
-ALTER TABLE `railway_stations_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `rooms_table`
@@ -947,27 +957,14 @@ ALTER TABLE `tbl_review`
   MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75035146;
 
 --
+-- AUTO_INCREMENT for table `trains_table`
+--
+ALTER TABLE `trains_table`
+  MODIFY `trainID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4343567811;
+
+--
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `booked_buses_table`
---
-ALTER TABLE `booked_buses_table`
-  ADD CONSTRAINT `booked_buses_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
-  ADD CONSTRAINT `booked_buses_table_ibfk_2` FOREIGN KEY (`busID`) REFERENCES `tbl_client` (`clientID`);
-
---
--- Constraints for table `booked_flights_table`
---
-ALTER TABLE `booked_flights_table`
-  ADD CONSTRAINT `booked_flights_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
-
---
--- Constraints for table `booked_trains_table`
---
-ALTER TABLE `booked_trains_table`
-  ADD CONSTRAINT `booked_trains_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
 
 --
 -- Constraints for table `booking_table`
