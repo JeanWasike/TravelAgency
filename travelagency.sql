@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 06, 2021 at 05:16 AM
+-- Generation Time: Nov 12, 2021 at 08:13 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -228,19 +228,20 @@ INSERT INTO `categories_table` (`categoryID`, `categoryName`) VALUES
 
 CREATE TABLE `countries_table` (
   `countryID` int(10) NOT NULL,
-  `countryName` varchar(45) NOT NULL
+  `countryName` varchar(45) NOT NULL,
+  `is_deleted` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `countries_table`
 --
 
-INSERT INTO `countries_table` (`countryID`, `countryName`) VALUES
-(1, 'Kenya'),
-(2, 'Ethiopia'),
-(4, 'Tanzania'),
-(6, 'Rwanda'),
-(7, 'Zambia');
+INSERT INTO `countries_table` (`countryID`, `countryName`, `is_deleted`) VALUES
+(1, 'Kenya', 0),
+(2, 'Ethiopia', 0),
+(4, 'Tanzania', 0),
+(6, 'Rwanda', 0),
+(7, 'Zambia', 0);
 
 -- --------------------------------------------------------
 
@@ -251,26 +252,31 @@ INSERT INTO `countries_table` (`countryID`, `countryName`) VALUES
 CREATE TABLE `destination_table` (
   `destID` int(100) NOT NULL,
   `destName` varchar(100) NOT NULL,
-  `countryID` int(10) NOT NULL
+  `destImage` varchar(500) NOT NULL,
+  `countryID` int(10) NOT NULL,
+  `is_deleted` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `destination_table`
 --
 
-INSERT INTO `destination_table` (`destID`, `destName`, `countryID`) VALUES
-(1, 'Maasai Mara', 1),
-(2, 'Nairobi City', 1),
-(3, 'Mombasa - Coast', 1),
-(4, 'Mount Kilimanjaro', 4),
-(5, 'Serengeti National Park', 4),
-(6, 'Zanzibar', 4),
-(7, 'Addis Ababa', 2),
-(8, 'Bahir Dar', 2),
-(9, 'Bishoftu', 2),
-(10, 'Lake Kivu', 6),
-(11, 'Kigali Genocide Memorial', 6),
-(12, 'The Savannas of Akagera National Park', 6);
+INSERT INTO `destination_table` (`destID`, `destName`, `destImage`, `countryID`, `is_deleted`) VALUES
+(1, 'Maasai Mara', 'kenya.jpg', 1, 0),
+(2, 'Nairobi City', 'nairobi.jpg', 1, 0),
+(3, 'Mombasa - Coast', 'diani.jpg', 1, 0),
+(4, 'Mount Kilimanjaro', 'tzTwo.jpg', 4, 0),
+(5, 'Serengeti National Park', 'tzThree.jpg', 4, 0),
+(6, 'Zanzibar', 'tzOne.jpg', 4, 0),
+(7, 'Addis Ababa', 'eth3.jpg', 2, 0),
+(8, 'Bahir Dar', 'eth1.jpg', 2, 0),
+(9, 'Bishoftu', 'eth2.jpg', 2, 0),
+(10, 'Lake Kivu', 'rwanda1.jpg', 6, 0),
+(11, 'Kigali Genocide Memorial', 'rwanda2.jpg', 6, 0),
+(12, 'The Savannas of Akagera National Park', 'rwanda3.jpg', 6, 0),
+(13, 'Livingstone', 'zamb1.jpg', 7, 0),
+(14, 'South Luanga National Park', 'zamb2.jpg', 7, 0),
+(15, 'Victoria Falls', 'zamb3.jpg', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -386,61 +392,62 @@ CREATE TABLE `hotels_table` (
   `hotelName` varchar(100) NOT NULL,
   `hotelAddress` varchar(100) NOT NULL,
   `hotelImage` varchar(500) NOT NULL,
-  `destID` int(100) NOT NULL
+  `destID` int(100) NOT NULL,
+  `is_deleted` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `hotels_table`
 --
 
-INSERT INTO `hotels_table` (`hotelID`, `hotelName`, `hotelAddress`, `hotelImage`, `destID`) VALUES
-(1, 'The Voyager Beach Resort', ' Off Mt Kenya Road, Mombasa', 'https://lh3.googleusercontent.com/p/AF1QipOQLbd-viPcBO-RI5sUzd-DS7WABTy3vb02tuZE=w296-h202-n-k-rw-no-v1', 3),
-(2, 'PrideInn Paradise Beach Resort and Spa', ' Serena Rd, Mombasa', 'https://lh5.googleusercontent.com/proxy/IG80PUgUw4FU4m_TK6UYISlL_WDONACTKwVSpweaIqcIUeoiBFiovSD3TFu0Ju89ydtw23Dil_N-Qb8admYRiBPADxmoWkZh3J0DlEFjJ37bK_qBrbPjuEkFFZcJHHn32HsqY5ypJkeawMUZH4GDHvdJPNPI2g=w325-h216-k-no', 3),
-(3, 'The Reef Hotel Mombasa', 'Mount Kenya Road, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3),
-(4, 'Sarova Whitesands Beach Resort and Spa', 'Off Malindi Road, Mombasa County, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3),
-(5, 'Serena Beach Resort and Spa', 'Shanzu, 00100 Shanzu, Kenya ', 'https://cf.bstatic.com/xdata/images/hotel/max200/280001666.jpg?k=79952bdca8ea7968ccb87f6d80754cd472facac75df9378d109c9f817a9f28a7&o=&hp=1', 3),
-(6, 'Leopard Hill', ' Mara Naboisho, 00100 Naboisho, Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/216259311.jpg?k=6eb5da85abde55d0064f440f3de41dbbd91431333b17b1321bcd93efa12a6aba&o=&hp=1', 1),
-(7, 'Olare Mara Kempinski Masai Mara', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1),
-(8, 'Neptune Mara Rianta Luxury Camp', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1),
-(9, 'Fairmont Mara Safari Club', 'Fairmont Mara Safari Club, 58581, Mara Safari Club, Aitong, Kenya', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/ee/e5/f2/fairmont-mara-safari.jpg?w=900&h=-1&s=1', 1),
-(10, 'Royal Mara Safari Lodge', 'Mara North Conservancy\r\n ', 'https://lh6.googleusercontent.com/proxy/TeZ0snnqhsO0bJImnPNesSAUgFKX0ifrexURSvxOthBa6noymEwIggWrFwEOpYZ8ilUCfEV81CuyplElbS71Yxq-HzjJt4MJMmKbFbHu-Vioz8aDtxy0Qvnxywm_pcuETcONaZK3KxTF-Q1Re4dWCPd6iMe70g=w325-h175-k-no', 1),
-(11, 'Sankara Nairobi', '05 Woodvale Grove, Nairobi', 'https://lh5.googleusercontent.com/p/AF1QipOoAehtuzXK1NB5tvpUQIkIA3K8lTPcf2urbEws=w325-h216-k-no', 2),
-(12, 'Villa Rosa Kempinski Nairobi', 'Chiromo Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2),
-(13, 'Radisson Blu Hotel and Residence', 'Elgon Road', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2),
-(14, 'Tamarind Tree Hotel', 'Langata Link Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOzmaXQqM77BPFpR7CGgTrRYUsEVIxSR4zOHSw=w296-h202-n-k-rw-no-v1', 2),
-(15, 'Hemingways Nairobi', 'Karen Mbagathi Ridge', 'https://lh5.googleusercontent.com/p/AF1QipMz2lbBWgHv6Z6yZjWgPZas4ztBhbsmSCQUKbU6=w325-h216-k-no', 2),
-(16, 'Babylon Lodge', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/N_eR-c7O_I3tRi44UHGjGS6HcYFlcJ8CJo_yRyQnqxyRb8ggghHW4qg8MbXwnd_NCrlcH6VlfApaO8DGbiSR23LoB4egdegRc8T5eEUeH3thenCgTzDROpXB5PCmG4fV6hO39wX4VZMtQffGQsuED4RiyTIT_w=w325-h221-k-no', 4),
-(17, 'Kilimanjaro Resort Loitokitok', 'Outward Bound Road, 00209 Oloitokitok , Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/170747358.jpg?k=2a7b683b8345657ed5e397bf9c2e6bcb633bc02a22483c28610934d3c7c324f8&o=&hp=1', 4),
-(18, 'Mount Kilimanjaro View Lodge', 'Shimbwe Juju Village, 15 Km from Moshi, Moshi, Tanzania', 'https://lh4.googleusercontent.com/proxy/XmwbPA635_RPVlxUt09tNbbh8BNejQDVszchQuUzL88fJ3-RddI_RcEnOVOIn7vwVzw3p5ovxjLpu7dADvfR_yPNuoZNW50HGoleVhG1lw9hl5VNda381Pw7orm5oL8wTOJhB6NbAqsLoZhvXxDdMxCLTm5_r8k=w325-h243-k-no', 4),
-(19, 'Satao Elerai', 'Amboseli National Park Headquarters', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4),
-(20, 'Aishi Machame Hotel', 'Nyamuma Hills Serengeti National Park Serengeti TZ, 01184, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4),
-(21, 'Serengeti Mawe Tented Camp', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/-WwIWXrc2LTOotUsTYAudbGJtFopnT69T60i96RAOQ-aK6Qvh46WpYdvvo-_lbKploxEkJSsDDADx_mss5tjCw7UkpRgYQVwLxVRHoibYm5tkEga9gLa82ms2Oh2KhImQo_PX5EazHThdItRG7dTCCg2UPhZqA=w325-h216-k-no', 5),
-(22, 'Melia Serengeti Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzania', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/a1/07/45/the-infinity-pool.jpg?w=1000&h=-1&s=1', 5),
-(23, 'Lobo Wildlife Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzani', 'https://exp.cdn-hotels.com/hotels/22000000/21560000/21558100/21558058/b2daae77_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5),
-(24, 'Mbuzi Mawe Serena Camp', 'Central Serengeti Corridor, Serengeti National Park, TZ, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipM-g97EEYMuYr0C3eh3oIVAdVHEcOCCnRof1RUU=w325-h216-k-no', 5),
-(25, 'Serengeti Simba Lodge', 'Ikoma Wima, Serengeti National Park, Serengeti National Park, Tanzania', 'https://exp.cdn-hotels.com/hotels/22000000/21540000/21538200/21538175/334fe374_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5),
-(26, 'Drifters Zanzibar', 'PO Box 791 Zanzibar, Paje, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOrd2GLvpzZjftj_sq4ONnbFSOy92HkGCgkpvO8=w325-h182-k-no', 6),
-(27, 'Moja Tuu Luxury Villas', 'North East Coast Area Kiwengwa Zanzibar, Tanzania', 'https://lh4.googleusercontent.com/proxy/gNYvkXH5z7BB9hl1ZLoi_KhatiQT5PkrhJWF0l5LZNOTT2VmAx8WkKdOXsM2Iqqmp-jyzpu79oXJmwQBZ-F1tDJThIEZYEWql_CVaQ7AACFwZ-ZvyXnC7kEo0EjgnoBivhWU85QZZ2JjTm5_eG8_zYkaK4dG7g=w325-h216-k-no', 6),
-(28, 'Zanzibar Beach Resort', 'Mazizini Kilimani, Zanzibar 2586, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOqujgm6u0URBIcjw5B_4rhoWmViHPKCtBJwlZ-=w325-h216-k-no', 6),
-(29, 'Filao Beach Zanzibar', 'Chwaka Bay, East Coast Zanzibar City, Michamvi Beach Track, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipN2edX8wn0WIz3buxc7FKwNgxYjzE8xDNcuDHTA=w325-h216-k-no', 6),
-(30, 'Hotel Verde Zanzibar', 'Malawi Rd, Zanzibar, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipMEu2wvNl9se5j1s4g9smz_-BhuV1424D3Q-k7y=w325-h182-k-no', 6),
-(31, 'The Grand Palace Suites Hotel', 'Guinea Conakry St, Addis Ababa 5710, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNawHhPDAsdSQRPCLtWPQr0LgEiOokm3LKOZdKF=w325-h386-k-no', 7),
-(32, 'Radisson Blu Hotel', 'Kazanchis Business District Kirkos Subcity 17/18 Addis Ababa, 1000, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipOzeHHmpxbtLsNqCqzkCUzBZU63oPWlx_F2Ks4h=w325-h216-k-no', 7),
-(33, 'Capital Hotel and Spa', '22 Haile Gebre Silase St Addis Ababa ET 1878, Haile Gebre Silase St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipN1KgdZGFyjiCa6ByMlx464IprIWduj7o4gur-v=w325-h216-k-no', 7),
-(34, 'Best Western Plus Pearl Addis', 'Cameroon St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNxCk9rSTfPK-BOjNFlfbFUcA93kUVnUoSXtSJi=w325-h216-k-no', 7),
-(35, 'Golden Tulip Addis Ababa Hotel', 'Cameroon St, Addis Ababa 5623, Ethiopia', 'https://lh3.googleusercontent.com/proxy/wV-DBreM7-abDsSkwp3r6RSfxsxwwCiTXVxu8FRlK2ssZvg79qnVeXgoiqGwqXmLSV1QeZ2iRZIm2kpx6HxTYgL23XJ9inLQT3jBmx-dFokUZRDJ_RpwNtMYOXOBU2Ldkpq1PDSPdQUndqRWDtyBxUlSiKExR1c=w325-h275-k-no', 7),
-(36, 'Jacaranda Hotel', 'In front of old regional stadium, 1890 Bahir Dar, Ethiopia', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/236449766.jpg?k=ac11d0671166e55ab0eee492ac6f549f47c0d91fee4cb44737d01c8044f01b25&o=&hp=1', 8),
-(37, 'Delano Hotel and Spa', 'Kebele 15, Bahir Dar, 1338, Ethiopia', 'https://exp.cdn-hotels.com/hotels/18000000/17760000/17756200/17756147/4bfb79ac_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 8),
-(38, 'Rahnile Hotel', 'kebele 05, Behind EEPCO building, Bahir Dar, Ethiopia\r\n', 'https://lh5.googleusercontent.com/p/AF1QipPLNri9I_WpUdH16bf8OgXfLUo5hrtNu_2wioA=w325-h216-k-no', 8),
-(39, 'Kakemark Hotel', 'Felege Hiwot Rd, Bahir Dar, Ethiopia', 'https://lh5.googleusercontent.com/proxy/Z--bztX-h3bdmcIJp4THp2q7MDO8j9Hhqmal8kD988EbTf-QLen22WtZWqu8K0gKTc5A974wKEfIMUNwRXczeUPPH_1URHptIKVNlnCSH0Qpeq_04H_-vERvSHIvd4nmGQWNrWKNHswqmB7lFqMDOj6QcX3zLTU=w325-h216-k-no', 8),
-(40, 'Homland Hotel', ' Ethiopia , Bhair Dar, Bahir Dar, Ethiopia\r\n', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/222466968.jpg?k=b7f1a332fc571f914b3845d9f0d20de4a3beb81cc3acdcb1f09f36c66ec75c24&o=&hp=1', 8),
-(41, 'Babogaya Lake Viewpoint Lodge', 'Kebele 15 House 571, Debre Zeyit, 4000, Ethiopia', 'https://exp.cdn-hotels.com/hotels/6000000/5640000/5631800/5631762/46d81fb6_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 9),
-(42, 'Liesak Resport Hotel', 'Guda Lake, Bishoftu, Ethiopia\r\n', 'https://lh5.googleusercontent.com/proxy/V2DDTGbxHvaG5jpnmtBZfaULzIfdNwHfRxKnPsUzf1kR1g9Y8s6aXSAFeYnLvOXrrHTj39vw1gfiGjI1Yo-X3N05tfsMZxQKl9tBYMcm-t2NeHtuBJMIsadLLexFzJph6Xye_CXhBq_2jMtbicXWKx_B1D-OEA=w325-h222-k-no', 9),
-(43, 'Crown Hotel', 'Kaliti, Akaky Kaliti, Addis Ababa, Ethiopia', 'https://pix8.agoda.net/hotelImages/535/535622/535622_13101718590017054121.jpg?s=1024x768', 9),
-(44, 'Beacon Hotel', 'Saris Abo W18 House Number 1822 P.O.Box 1046, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNKtP-m8hqbJ07jdCdTP0Mmvbr0lwEQPe77TDhS=w325-h216-k-no', 9),
-(45, 'Asham Africa Hotel', 'Bishoftu,1000, Ethiopia', 'https://lh5.googleusercontent.com/proxy/qU4H2s84dYXNZr5bvhIfIEEtISMIQr0maDHzIGuRZzYcveW5rcBZTIeyvbCjc5sMIcAJUTgXXTnaqa87OvaPSEZqTp2G2bVjJs7lRe7GjD12Sv3hAfRIeWUO6AQfolLwEk1ft7dAleJtUn0Jh-R9N_l_GLwHvVg=w325-h215-k-no', 9),
-(46, 'Lake Kivu Serena Hotel', 'Gisenyi Rwanda, Gisenyi, 00100, Rwanda', 'https://exp.cdn-hotels.com/hotels/3000000/2390000/2384400/2384396/e9d21494_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 10),
-(47, 'Gorillas Lake Kivu Hotel', 'Beach Road, Gisenyi, Rwanda', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/42541114.jpg?k=11ec41d109d7729f3cba191ed82174e4f86e53e4b660d6b45c73a86ace5fe8d8&o=&hp=', 10);
+INSERT INTO `hotels_table` (`hotelID`, `hotelName`, `hotelAddress`, `hotelImage`, `destID`, `is_deleted`) VALUES
+(1, 'The Voyager Beach Resort', ' Off Mt Kenya Road, Mombasa', 'https://lh3.googleusercontent.com/p/AF1QipOQLbd-viPcBO-RI5sUzd-DS7WABTy3vb02tuZE=w296-h202-n-k-rw-no-v1', 3, 0),
+(2, 'PrideInn Paradise Beach Resort and Spa', ' Serena Rd, Mombasa', 'https://lh5.googleusercontent.com/proxy/IG80PUgUw4FU4m_TK6UYISlL_WDONACTKwVSpweaIqcIUeoiBFiovSD3TFu0Ju89ydtw23Dil_N-Qb8admYRiBPADxmoWkZh3J0DlEFjJ37bK_qBrbPjuEkFFZcJHHn32HsqY5ypJkeawMUZH4GDHvdJPNPI2g=w325-h216-k-no', 3, 0),
+(3, 'The Reef Hotel Mombasa', 'Mount Kenya Road, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3, 0),
+(4, 'Sarova Whitesands Beach Resort and Spa', 'Off Malindi Road, Mombasa County, Mombasa', 'https://lh5.googleusercontent.com/p/AF1QipO7ct1_yTj6NKeYjAa94tnI2sqTA7FDINHwj5gr=w325-h216-k-no', 3, 0),
+(5, 'Serena Beach Resort and Spa', 'Shanzu, 00100 Shanzu, Kenya ', 'https://cf.bstatic.com/xdata/images/hotel/max200/280001666.jpg?k=79952bdca8ea7968ccb87f6d80754cd472facac75df9378d109c9f817a9f28a7&o=&hp=1', 3, 0),
+(6, 'Leopard Hill', ' Mara Naboisho, 00100 Naboisho, Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/216259311.jpg?k=6eb5da85abde55d0064f440f3de41dbbd91431333b17b1321bcd93efa12a6aba&o=&hp=1', 1, 0),
+(7, 'Olare Mara Kempinski Masai Mara', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1, 0),
+(8, 'Neptune Mara Rianta Luxury Camp', 'Oloololo Gate, Masai Mara', 'https://lh5.googleusercontent.com/p/AF1QipO-fEU8dtvETp9uwzpHvjYjrrZ1VbBb04elDYEK=w325-h216-k-no', 1, 0),
+(9, 'Fairmont Mara Safari Club', 'Fairmont Mara Safari Club, 58581, Mara Safari Club, Aitong, Kenya', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/ee/e5/f2/fairmont-mara-safari.jpg?w=900&h=-1&s=1', 1, 0),
+(10, 'Royal Mara Safari Lodge', 'Mara North Conservancy\r\n ', 'https://lh6.googleusercontent.com/proxy/TeZ0snnqhsO0bJImnPNesSAUgFKX0ifrexURSvxOthBa6noymEwIggWrFwEOpYZ8ilUCfEV81CuyplElbS71Yxq-HzjJt4MJMmKbFbHu-Vioz8aDtxy0Qvnxywm_pcuETcONaZK3KxTF-Q1Re4dWCPd6iMe70g=w325-h175-k-no', 1, 0),
+(11, 'Sankara Nairobi', '05 Woodvale Grove, Nairobi', 'https://lh5.googleusercontent.com/p/AF1QipOoAehtuzXK1NB5tvpUQIkIA3K8lTPcf2urbEws=w325-h216-k-no', 2, 0),
+(12, 'Villa Rosa Kempinski Nairobi', 'Chiromo Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2, 0),
+(13, 'Radisson Blu Hotel and Residence', 'Elgon Road', 'https://lh3.googleusercontent.com/p/AF1QipOdgUIQYnMqK7wNtS_48AeVFtJ-iQ6JGW9NDpUL=w296-h202-n-k-rw-no-v1', 2, 0),
+(14, 'Tamarind Tree Hotel', 'Langata Link Rd, Nairobi', 'https://lh3.googleusercontent.com/p/AF1QipOzmaXQqM77BPFpR7CGgTrRYUsEVIxSR4zOHSw=w296-h202-n-k-rw-no-v1', 2, 0),
+(15, 'Hemingways Nairobi', 'Karen Mbagathi Ridge', 'https://lh5.googleusercontent.com/p/AF1QipMz2lbBWgHv6Z6yZjWgPZas4ztBhbsmSCQUKbU6=w325-h216-k-no', 2, 0),
+(16, 'Babylon Lodge', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/N_eR-c7O_I3tRi44UHGjGS6HcYFlcJ8CJo_yRyQnqxyRb8ggghHW4qg8MbXwnd_NCrlcH6VlfApaO8DGbiSR23LoB4egdegRc8T5eEUeH3thenCgTzDROpXB5PCmG4fV6hO39wX4VZMtQffGQsuED4RiyTIT_w=w325-h221-k-no', 4, 0),
+(17, 'Kilimanjaro Resort Loitokitok', 'Outward Bound Road, 00209 Oloitokitok , Kenya', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/170747358.jpg?k=2a7b683b8345657ed5e397bf9c2e6bcb633bc02a22483c28610934d3c7c324f8&o=&hp=1', 4, 0),
+(18, 'Mount Kilimanjaro View Lodge', 'Shimbwe Juju Village, 15 Km from Moshi, Moshi, Tanzania', 'https://lh4.googleusercontent.com/proxy/XmwbPA635_RPVlxUt09tNbbh8BNejQDVszchQuUzL88fJ3-RddI_RcEnOVOIn7vwVzw3p5ovxjLpu7dADvfR_yPNuoZNW50HGoleVhG1lw9hl5VNda381Pw7orm5oL8wTOJhB6NbAqsLoZhvXxDdMxCLTm5_r8k=w325-h243-k-no', 4, 0),
+(19, 'Satao Elerai', 'Amboseli National Park Headquarters', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4, 0),
+(20, 'Aishi Machame Hotel', 'Nyamuma Hills Serengeti National Park Serengeti TZ, 01184, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipNBF85jdCRA837QDDYwZZ43VrFV2Aqfy4yHZJBh=w325-h162-k-no', 4, 0),
+(21, 'Serengeti Mawe Tented Camp', 'Marangu Mashariki, Kilimanjaro region. Tz', 'https://lh5.googleusercontent.com/proxy/-WwIWXrc2LTOotUsTYAudbGJtFopnT69T60i96RAOQ-aK6Qvh46WpYdvvo-_lbKploxEkJSsDDADx_mss5tjCw7UkpRgYQVwLxVRHoibYm5tkEga9gLa82ms2Oh2KhImQo_PX5EazHThdItRG7dTCCg2UPhZqA=w325-h216-k-no', 5, 0),
+(22, 'Melia Serengeti Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzania', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/a1/07/45/the-infinity-pool.jpg?w=1000&h=-1&s=1', 5, 0),
+(23, 'Lobo Wildlife Lodge', 'Nyamuma Hills, Serengeti National Park 01184 Tanzani', 'https://exp.cdn-hotels.com/hotels/22000000/21560000/21558100/21558058/b2daae77_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5, 0),
+(24, 'Mbuzi Mawe Serena Camp', 'Central Serengeti Corridor, Serengeti National Park, TZ, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipM-g97EEYMuYr0C3eh3oIVAdVHEcOCCnRof1RUU=w325-h216-k-no', 5, 0),
+(25, 'Serengeti Simba Lodge', 'Ikoma Wima, Serengeti National Park, Serengeti National Park, Tanzania', 'https://exp.cdn-hotels.com/hotels/22000000/21540000/21538200/21538175/334fe374_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 5, 0),
+(26, 'Drifters Zanzibar', 'PO Box 791 Zanzibar, Paje, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOrd2GLvpzZjftj_sq4ONnbFSOy92HkGCgkpvO8=w325-h182-k-no', 6, 0),
+(27, 'Moja Tuu Luxury Villas', 'North East Coast Area Kiwengwa Zanzibar, Tanzania', 'https://lh4.googleusercontent.com/proxy/gNYvkXH5z7BB9hl1ZLoi_KhatiQT5PkrhJWF0l5LZNOTT2VmAx8WkKdOXsM2Iqqmp-jyzpu79oXJmwQBZ-F1tDJThIEZYEWql_CVaQ7AACFwZ-ZvyXnC7kEo0EjgnoBivhWU85QZZ2JjTm5_eG8_zYkaK4dG7g=w325-h216-k-no', 6, 0),
+(28, 'Zanzibar Beach Resort', 'Mazizini Kilimani, Zanzibar 2586, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipOqujgm6u0URBIcjw5B_4rhoWmViHPKCtBJwlZ-=w325-h216-k-no', 6, 0),
+(29, 'Filao Beach Zanzibar', 'Chwaka Bay, East Coast Zanzibar City, Michamvi Beach Track, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipN2edX8wn0WIz3buxc7FKwNgxYjzE8xDNcuDHTA=w325-h216-k-no', 6, 0),
+(30, 'Hotel Verde Zanzibar', 'Malawi Rd, Zanzibar, Tanzania', 'https://lh5.googleusercontent.com/p/AF1QipMEu2wvNl9se5j1s4g9smz_-BhuV1424D3Q-k7y=w325-h182-k-no', 6, 0),
+(31, 'The Grand Palace Suites Hotel', 'Guinea Conakry St, Addis Ababa 5710, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNawHhPDAsdSQRPCLtWPQr0LgEiOokm3LKOZdKF=w325-h386-k-no', 7, 0),
+(32, 'Radisson Blu Hotel', 'Kazanchis Business District Kirkos Subcity 17/18 Addis Ababa, 1000, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipOzeHHmpxbtLsNqCqzkCUzBZU63oPWlx_F2Ks4h=w325-h216-k-no', 7, 0),
+(33, 'Capital Hotel and Spa', '22 Haile Gebre Silase St Addis Ababa ET 1878, Haile Gebre Silase St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipN1KgdZGFyjiCa6ByMlx464IprIWduj7o4gur-v=w325-h216-k-no', 7, 0),
+(34, 'Best Western Plus Pearl Addis', 'Cameroon St, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNxCk9rSTfPK-BOjNFlfbFUcA93kUVnUoSXtSJi=w325-h216-k-no', 7, 0),
+(35, 'Golden Tulip Addis Ababa Hotel', 'Cameroon St, Addis Ababa 5623, Ethiopia', 'https://lh3.googleusercontent.com/proxy/wV-DBreM7-abDsSkwp3r6RSfxsxwwCiTXVxu8FRlK2ssZvg79qnVeXgoiqGwqXmLSV1QeZ2iRZIm2kpx6HxTYgL23XJ9inLQT3jBmx-dFokUZRDJ_RpwNtMYOXOBU2Ldkpq1PDSPdQUndqRWDtyBxUlSiKExR1c=w325-h275-k-no', 7, 0),
+(36, 'Jacaranda Hotel', 'In front of old regional stadium, 1890 Bahir Dar, Ethiopia', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/236449766.jpg?k=ac11d0671166e55ab0eee492ac6f549f47c0d91fee4cb44737d01c8044f01b25&o=&hp=1', 8, 0),
+(37, 'Delano Hotel and Spa', 'Kebele 15, Bahir Dar, 1338, Ethiopia', 'https://exp.cdn-hotels.com/hotels/18000000/17760000/17756200/17756147/4bfb79ac_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 8, 0),
+(38, 'Rahnile Hotel', 'kebele 05, Behind EEPCO building, Bahir Dar, Ethiopia\r\n', 'https://lh5.googleusercontent.com/p/AF1QipPLNri9I_WpUdH16bf8OgXfLUo5hrtNu_2wioA=w325-h216-k-no', 8, 0),
+(39, 'Kakemark Hotel', 'Felege Hiwot Rd, Bahir Dar, Ethiopia', 'https://lh5.googleusercontent.com/proxy/Z--bztX-h3bdmcIJp4THp2q7MDO8j9Hhqmal8kD988EbTf-QLen22WtZWqu8K0gKTc5A974wKEfIMUNwRXczeUPPH_1URHptIKVNlnCSH0Qpeq_04H_-vERvSHIvd4nmGQWNrWKNHswqmB7lFqMDOj6QcX3zLTU=w325-h216-k-no', 8, 0),
+(40, 'Homland Hotel', ' Ethiopia , Bhair Dar, Bahir Dar, Ethiopia\r\n', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/222466968.jpg?k=b7f1a332fc571f914b3845d9f0d20de4a3beb81cc3acdcb1f09f36c66ec75c24&o=&hp=1', 8, 0),
+(41, 'Babogaya Lake Viewpoint Lodge', 'Kebele 15 House 571, Debre Zeyit, 4000, Ethiopia', 'https://exp.cdn-hotels.com/hotels/6000000/5640000/5631800/5631762/46d81fb6_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 9, 0),
+(42, 'Liesak Resport Hotel', 'Guda Lake, Bishoftu, Ethiopia\r\n', 'https://lh5.googleusercontent.com/proxy/V2DDTGbxHvaG5jpnmtBZfaULzIfdNwHfRxKnPsUzf1kR1g9Y8s6aXSAFeYnLvOXrrHTj39vw1gfiGjI1Yo-X3N05tfsMZxQKl9tBYMcm-t2NeHtuBJMIsadLLexFzJph6Xye_CXhBq_2jMtbicXWKx_B1D-OEA=w325-h222-k-no', 9, 0),
+(43, 'Crown Hotel', 'Kaliti, Akaky Kaliti, Addis Ababa, Ethiopia', 'https://pix8.agoda.net/hotelImages/535/535622/535622_13101718590017054121.jpg?s=1024x768', 9, 0),
+(44, 'Beacon Hotel', 'Saris Abo W18 House Number 1822 P.O.Box 1046, Addis Ababa, Ethiopia', 'https://lh5.googleusercontent.com/p/AF1QipNKtP-m8hqbJ07jdCdTP0Mmvbr0lwEQPe77TDhS=w325-h216-k-no', 9, 0),
+(45, 'Asham Africa Hotel', 'Bishoftu,1000, Ethiopia', 'https://lh5.googleusercontent.com/proxy/qU4H2s84dYXNZr5bvhIfIEEtISMIQr0maDHzIGuRZzYcveW5rcBZTIeyvbCjc5sMIcAJUTgXXTnaqa87OvaPSEZqTp2G2bVjJs7lRe7GjD12Sv3hAfRIeWUO6AQfolLwEk1ft7dAleJtUn0Jh-R9N_l_GLwHvVg=w325-h215-k-no', 9, 0),
+(46, 'Lake Kivu Serena Hotel', 'Gisenyi Rwanda, Gisenyi, 00100, Rwanda', 'https://exp.cdn-hotels.com/hotels/3000000/2390000/2384400/2384396/e9d21494_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 10, 0),
+(47, 'Gorillas Lake Kivu Hotel', 'Beach Road, Gisenyi, Rwanda', 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/42541114.jpg?k=11ec41d109d7729f3cba191ed82174e4f86e53e4b660d6b45c73a86ace5fe8d8&o=&hp=', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -482,6 +489,7 @@ CREATE TABLE `images_table` (
 CREATE TABLE `package_table` (
   `packageID` int(255) NOT NULL,
   `packageDescription` varchar(100) NOT NULL,
+  `packageImage` varchar(500) DEFAULT NULL,
   `hotelID` bigint(255) NOT NULL,
   `roomID` int(10) NOT NULL,
   `noOfGuests` int(100) NOT NULL,
@@ -490,20 +498,40 @@ CREATE TABLE `package_table` (
   `checkInDate` date NOT NULL,
   `checkOutDate` date NOT NULL,
   `status` enum('Booked',' Available') NOT NULL,
-  `categoryID` int(10) NOT NULL
+  `categoryID` int(10) NOT NULL,
+  `is_deleted` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `package_table`
 --
 
-INSERT INTO `package_table` (`packageID`, `packageDescription`, `hotelID`, `roomID`, `noOfGuests`, `pricePerGuest`, `noOfDays`, `checkInDate`, `checkOutDate`, `status`, `categoryID`) VALUES
-(3, 'Suitable for a friends getaway at the beautiful coast of Kenya', 1, 2, 2, 8849, 2, '2021-11-20', '2021-11-22', ' Available', 2),
-(4, 'A nice retreat in the wild for friends or a couple', 6, 6, 2, 57186.5, 2, '2021-11-20', '2021-11-22', ' Available', 2),
-(5, 'Ideal place to have a staycation for friends in the city', 11, 4, 3, 14156, 1, '2021-11-20', '2021-11-21', ' Available', 2),
-(6, 'Ideal for a weekend away in the mountain', 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2),
-(7, 'Enjoy the coastal town of Zanzibar with your friends', 26, 2, 2, 3063, 2, '2021-11-27', '2021-11-29', ' Available', 2),
-(8, 'Enjoy a beautiful weekend in Ethiopia', 31, 2, 2, 3787, 2, '2021-11-27', '2021-11-29', ' Available', 2);
+INSERT INTO `package_table` (`packageID`, `packageDescription`, `packageImage`, `hotelID`, `roomID`, `noOfGuests`, `pricePerGuest`, `noOfDays`, `checkInDate`, `checkOutDate`, `status`, `categoryID`, `is_deleted`) VALUES
+(3, 'Suitable for a friends getaway at the beautiful coast of Kenya', NULL, 1, 2, 2, 8849, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(4, 'A nice retreat in the wild for friends or a couple', NULL, 6, 6, 2, 57186.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(5, 'Ideal place to have a staycation for friends in the city', NULL, 11, 4, 3, 14156, 1, '2021-11-20', '2021-11-21', ' Available', 2, 0),
+(6, 'Ideal for a weekend away in the mountain', NULL, 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(7, 'Enjoy the coastal town of Zanzibar with your friends', NULL, 26, 2, 2, 3063, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
+(8, 'Enjoy a beautiful weekend in Ethiopia', NULL, 31, 2, 2, 3787, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
+(9, 'Suitable for a friends getaway at the beautiful coast of Kenya', NULL, 1, 4, 3, 10049, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(10, 'Enjoy a lovely weekend at the coast with your friends or spouse', NULL, 2, 2, 2, 8454, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(11, 'Enjoy a lovely weekend at the coast with your family', NULL, 2, 9, 4, 10900.5, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(12, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse', NULL, 3, 2, 2, 5000, 3, '2021-11-20', '2021-11-23', ' Available', 2, 0),
+(13, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse with a beautiful sea view', NULL, 3, 5, 2, 8263, 2, '2021-11-20', '2021-11-23', ' Available', 2, 0),
+(14, 'A nice getaway at the coast of Kenya for friends or spouses', NULL, 4, 2, 2, 8263, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(15, 'A nice getaway at the coast of Kenya for friends or spouses with a nice view of the ocean', NULL, 4, 5, 2, 11124.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(16, 'Enjoy a nice weekend stay with friends or alone at the coast', NULL, 5, 2, 2, 15190.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(17, 'You fancy a lone trip in the wild?This is for you.', NULL, 6, 7, 1, 70469, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(18, 'Enjoy a trip in the wild for a weekend', NULL, 7, 3, 2, 55550, 2, '2021-11-20', '2021-11-22', 'Booked', 2, 0),
+(19, 'Suitable for lovers on their honeymoon. The relaxed atmosphere in the wild makes it more enjoyable.', NULL, 7, 10, 2, 59994, 7, '2021-11-20', '2021-11-27', ' Available', 3, 0),
+(20, 'Have fun in the wild with friends or a patner', NULL, 8, 3, 2, 50000, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(21, 'AN enjoyable honeymoon stay for newlyweds in the wild', NULL, 8, 10, 2, 54900, 5, '2021-11-20', '2021-11-25', ' Available', 3, 0),
+(22, 'Enjoy a week away with friends in the wild', NULL, 9, 6, 2, 27500, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(23, 'Enjoy a week away with friends in the wild', NULL, 10, 2, 2, 26400, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(24, 'An exquisite stay in the city with friends or alone', NULL, 11, 4, 3, 9437.33, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(25, 'An exquisite stay in the city with friends or alone', NULL, 12, 12, 2, 14783, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(26, 'An exquisite stay in the city with friends or alone', NULL, 12, 4, 3, 9180, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(27, 'An exquisite stay in the city for business or leisure', NULL, 12, 8, 2, 18339, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -888,7 +916,7 @@ ALTER TABLE `countries_table`
 -- AUTO_INCREMENT for table `destination_table`
 --
 ALTER TABLE `destination_table`
-  MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `destID` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `flights_table`
@@ -918,7 +946,7 @@ ALTER TABLE `images_table`
 -- AUTO_INCREMENT for table `package_table`
 --
 ALTER TABLE `package_table`
-  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `payment_table`
