@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 12, 2021 at 08:13 PM
+-- Generation Time: Nov 18, 2021 at 08:27 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -467,6 +467,32 @@ CREATE TABLE `hotel_amenities_table` (
   `hotelID` bigint(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `hotel_amenities_table`
+--
+
+INSERT INTO `hotel_amenities_table` (`amenityID`, `internetAvailability`, `parkingAailability`, `pool`, `spa`, `meals`, `airConditioning`, `healthFacilities`, `hotelID`) VALUES
+(1, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast', 'yes', NULL, 1),
+(2, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'yes', NULL, 2),
+(3, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'yes', NULL, 3),
+(4, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'yes', NULL, 4),
+(5, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'no', NULL, 5),
+(6, 'No Wifi', 'No Parking', 'no', 'no', 'Free breakfast, Dining Area', 'no', 'Additional Bathroom', 6),
+(7, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free breakfast, Restaurant, Bar', 'no', NULL, 7),
+(8, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free breakfast, Restaurant, Bar', 'no', NULL, 8),
+(9, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free breakfast, Restaurant, Bar', 'no', NULL, 9),
+(10, 'Free Wifi', 'Free Parking', 'no', 'no', 'Free breakfast, Restaurant, Bar', 'no', NULL, 10),
+(11, 'Free Wifi', 'Free Parking', 'yes', 'no', 'Free Breakfast, Restaurant, Bar', 'no', 'Fitness Centre, Sauna', 11),
+(12, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'no', 'Fitness Centre', 12),
+(13, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'no', 'Fitness Centre', 13),
+(14, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'yes', 'Fitness Centre', 14),
+(15, 'Free Wifi', 'Free Parking', 'yes', 'yes', 'Free Breakfast, Restaurant, Bar', 'yes', 'Fitness Centre', 15),
+(16, 'Free Wifi', NULL, 'no', 'no', 'Free Breakfast, Restaurant, Bar', 'no', NULL, 16),
+(17, 'Free Wifi', 'Free Parking', 'no', 'no', 'Free Breakfast, Restaurant, Bar', 'no', NULL, 17),
+(18, 'Free Wifi', 'Free Parking', 'no', 'yes', 'Free Breakfast, Restaurant, Bar', 'no', 'Fitness Centre', 18),
+(19, 'Free Wifi', 'Free Parking', 'no', 'no', 'Free Breakfast, Restaurant, Bar', 'no', NULL, 19),
+(20, 'Free Wifi', 'Free Parking', 'no', 'no', 'Free Breakfast, Restaurant, Bar', 'no', NULL, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -475,10 +501,60 @@ CREATE TABLE `hotel_amenities_table` (
 
 CREATE TABLE `images_table` (
   `imageID` int(255) NOT NULL,
-  `imageName` varchar(50) NOT NULL,
+  `imageName` varchar(500) NOT NULL,
   `imageDescription` varchar(100) NOT NULL,
   `hotelID` bigint(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `images_table`
+--
+
+INSERT INTO `images_table` (`imageID`, `imageName`, `imageDescription`, `hotelID`) VALUES
+(1, 'https://exp.cdn-hotels.com/hotels/2000000/1750000/1747500/1747416/a4a9a699_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 1),
+(2, 'https://exp.cdn-hotels.com/hotels/2000000/1750000/1747500/1747416/fcdbd5a9_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Superior Double Room', 1),
+(3, 'https://exp.cdn-hotels.com/hotels/13000000/12770000/12762000/12761959/7ae0998b_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 2),
+(4, 'https://exp.cdn-hotels.com/hotels/13000000/12770000/12762000/12761959/597df483_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Family Room', 2),
+(5, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/245133252.jpg?k=9631e235bd2964568d9afea687f8e912200230c0511d8adcd8356439bcc5820c&o=&hp=1', 'Standard Double Room', 3),
+(6, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/229303080.jpg?k=73c7df12e51bc174ffb32fd5a2ac5375e8ca20592861dda2e49d022b3a38acd8&o=&hp=1https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/229303080.jpg?k=73c7df12e51bc174ffb32fd5a2ac5375e8ca20592861dda2e49d022b3a38acd8&o=&hp=1', 'Sea View Room', 3),
+(7, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/248955668.jpg?k=cf564a14c158b207d6147beb36965b59790a03546a85cc3ee2b702369e1bb129&o=&hp=1', 'Sea View Room', 4),
+(8, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/224826721.jpg?k=b8273ec5ef25842da73f5ef68f77ddcaf65935c2deeab2fdc4d0457aabff3de7&o=&hp=1', 'Standard Double Room', 4),
+(9, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/8750324.jpg?k=36d33767e703a8efbf1abfef513ba06947384f778575b234957767f11f43835f&o=&hp=1', 'Standard Souble Room', 5),
+(10, 'https://exp.cdn-hotels.com/hotels/22000000/21900000/21892300/21892290/b44a909a_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Double Tent', 6),
+(11, 'https://exp.cdn-hotels.com/hotels/22000000/21900000/21892300/21892290/437f0bdd_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Tent', 6),
+(12, 'https://exp.cdn-hotels.com/hotels/6000000/5990000/5982300/5982297/edf15578_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Deluxe Double Room', 7),
+(13, 'https://exp.cdn-hotels.com/hotels/6000000/5990000/5982300/5982297/8fd77575_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'HoneyMoon Suite', 7),
+(14, 'https://exp.cdn-hotels.com/hotels/10000000/9520000/9516300/9516299/ad44ac3f_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Deluxe Double Room', 8),
+(15, 'https://exp.cdn-hotels.com/hotels/10000000/9520000/9516300/9516299/ace9bbc4_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'HoneyMoon Suite', 8),
+(16, 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/53009235.jpg?k=8212fcde3375daa6bb7d78d6c486575501ed3646daadbedd98c261a1825c797b&o=&hp=1', 'Double Tent', 9),
+(17, 'https://exp.cdn-hotels.com/hotels/21000000/20810000/20801900/20801876/ceaa8f9b_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 10),
+(18, 'https://cache.marriott.com/marriottassets/marriott/NBOAK/nboak-guestroom-4319-hor-clsc.jpg?interpolation=progressive-bilinear&downsize=512px:342px', 'Superior Double Room', 11),
+(19, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/259745539.jpg?k=73c8a8b086626baec65e1e2d6da9b31e2bf6d4a42114839e31ef76184ec84117&o=&hp=1', 'King Room', 12),
+(20, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/43569291.jpg?k=f3d1d7246a75d694ebf74d542a4a8af3cb678787de528c29a1784950fbb1fe3f&o=&hp=1', 'Superior Double Room', 12),
+(21, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/259754354.jpg?k=f21d4ed02f6a32bc2d7ec3444d7becc503d2b81a504431ca80d155bce354f51e&o=&hp=1', 'Executive Room', 12),
+(22, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/326744807.jpg?k=1e3ad32acee135ea3dc1847a6eb7fd8b02920a222f6a39b56befadaadad8b9d0&o=&hp=1', 'Deluxe Double Room', 13),
+(23, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/326744803.jpg?k=d42ae39f4eefb8e4bf17b8ac3cde675069d3703bc3e61b67d67c35083c62f393&o=&hp=1', 'Executive Room', 13),
+(24, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/165244048.jpg?k=5fe7075abf07476de39916e4f8f5ba43b8318778f91a157faa7aa2dd62b82dbf&o=&hp=1', 'King Room', 14),
+(25, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/138132938.jpg?k=864781468888f1a9f9b9187e2aa1d2de09f7a455fa07f9ed3129ad1a3cc93ce1&o=&hp=1', 'Family Room', 14),
+(26, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/122113511.jpg?k=224805ca99f726b0668f3200d0718a8bc88a5a10cad4c078db5deee23b269a46&o=&hp=1', 'Executive Room', 14),
+(27, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/158055096.jpg?k=710f2448882482fd82321d52b3fc92e3a056a39f68639da948a04dcc80087481&o=&hp=1', 'Deluxe Double Room', 15),
+(28, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/158055098.jpg?k=e9aea1a69dcd0cffc1e85ed0a0a4cdd5b55c9748b6d996f61b5b92114dcfe4e9&o=&hp=1', 'Executive Room', 15),
+(29, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/307260587.jpg?k=96408df010a25c2333072c9dcaa8380937dd98958efcaf04f8bed19ecfd9134d&o=&hp=1', 'Standard Double Room', 16),
+(30, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/310650799.jpg?k=65bc4cd28e6c567bdacfdbe61e9394529b85ba74fff88dd2155c71163a41f973&o=&hp=1', 'Triple Room', 16),
+(31, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/177030321.jpg?k=dcecb467a166cbf40ad1c0a6f9d5d83533256fac7d8edd7b033835b93e3239fd&o=&hp=1', 'Deluxe Double Room', 17),
+(32, 'https://exp.cdn-hotels.com/hotels/9000000/8720000/8719400/8719366/ba1c9000_y.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 18),
+(33, 'https://lh6.googleusercontent.com/proxy/agp2eHCDVR3zQzgbH9b6CcR5oSQDnycAB31btRMAAO4iZBkW_41YJO2sGUZRkxR0rI20QRG85ZIwEdJQmoh19ddaCt9_9SXEG2VdMYU26DB1dEnBrMP0rP9lP9b3UznbmAJUe3lH4xVQWIjkLdeckUq_nJjGPQ=w325-h200-k-no', 'Standard Double Room', 19),
+(34, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/84565535.jpg?k=0d38548b74b68ef8a6cb53132c9cd6da8a2e02b87024c3676a5c600963a91d05&o=&hp=1', 'Standard Double Room', 20),
+(35, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/110861584.jpg?k=d14a36e2d24902119ae2110bbfccf0514599162d3e94806573432731e3024b32&o=&hp=1', 'Standard Double Room', 21),
+(36, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/119432140.jpg?k=a292a4232d6e8529bfeaedb0dafc813d2de8fe60c66a69c62d066d70bf839a6f&o=&hp=1', 'Triple Room', 21),
+(37, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/110862498.jpg?k=6864361c261961f790205abca3ba63f198f655b1560309dd3f315768edd74f7d&o=&hp=1', 'Family Room', 21),
+(38, 'https://exp.cdn-hotels.com/hotels/19000000/18420000/18410300/18410258/75dff4ea_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 22),
+(39, 'https://exp.cdn-hotels.com/hotels/19000000/18420000/18410300/18410258/e7f1271b_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Deluxe Double Room', 22),
+(40, 'https://exp.cdn-hotels.com/hotels/19000000/18420000/18410300/18410258/ae1a04b9_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Triple Room', 22),
+(41, 'https://exp.cdn-hotels.com/hotels/33000000/32090000/32083400/32083322/b324accf_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 23),
+(42, 'https://t-cf.bstatic.com/xdata/images/hotel/max1280x900/98018441.jpg?k=efb325047561693ac8ebe235cd1f1672155c8ed67db1f16b971b46f215fa3476&o=&hp=1', 'Double Tent', 24),
+(43, 'https://exp.cdn-hotels.com/hotels/4000000/3290000/3284800/3284796/41cc233c_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Tent', 24),
+(44, '	Image: https://exp.cdn-hotels.com/hotels/22000000/21540000/21538200/21538175/c54f655f_z.jpg?impolicy=fcrop&w=1000&h=666&q=medium', 'Standard Double Room', 25);
 
 -- --------------------------------------------------------
 
@@ -489,7 +565,7 @@ CREATE TABLE `images_table` (
 CREATE TABLE `package_table` (
   `packageID` int(255) NOT NULL,
   `packageDescription` varchar(100) NOT NULL,
-  `packageImage` varchar(500) DEFAULT NULL,
+  `packageImage` int(255) NOT NULL,
   `hotelID` bigint(255) NOT NULL,
   `roomID` int(10) NOT NULL,
   `noOfGuests` int(100) NOT NULL,
@@ -507,31 +583,102 @@ CREATE TABLE `package_table` (
 --
 
 INSERT INTO `package_table` (`packageID`, `packageDescription`, `packageImage`, `hotelID`, `roomID`, `noOfGuests`, `pricePerGuest`, `noOfDays`, `checkInDate`, `checkOutDate`, `status`, `categoryID`, `is_deleted`) VALUES
-(3, 'Suitable for a friends getaway at the beautiful coast of Kenya', NULL, 1, 2, 2, 8849, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(4, 'A nice retreat in the wild for friends or a couple', NULL, 6, 6, 2, 57186.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(5, 'Ideal place to have a staycation for friends in the city', NULL, 11, 4, 3, 14156, 1, '2021-11-20', '2021-11-21', ' Available', 2, 0),
-(6, 'Ideal for a weekend away in the mountain', NULL, 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(7, 'Enjoy the coastal town of Zanzibar with your friends', NULL, 26, 2, 2, 3063, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
-(8, 'Enjoy a beautiful weekend in Ethiopia', NULL, 31, 2, 2, 3787, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
-(9, 'Suitable for a friends getaway at the beautiful coast of Kenya', NULL, 1, 4, 3, 10049, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(10, 'Enjoy a lovely weekend at the coast with your friends or spouse', NULL, 2, 2, 2, 8454, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(11, 'Enjoy a lovely weekend at the coast with your family', NULL, 2, 9, 4, 10900.5, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
-(12, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse', NULL, 3, 2, 2, 5000, 3, '2021-11-20', '2021-11-23', ' Available', 2, 0),
-(13, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse with a beautiful sea view', NULL, 3, 5, 2, 8263, 2, '2021-11-20', '2021-11-23', ' Available', 2, 0),
-(14, 'A nice getaway at the coast of Kenya for friends or spouses', NULL, 4, 2, 2, 8263, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(15, 'A nice getaway at the coast of Kenya for friends or spouses with a nice view of the ocean', NULL, 4, 5, 2, 11124.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(16, 'Enjoy a nice weekend stay with friends or alone at the coast', NULL, 5, 2, 2, 15190.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(17, 'You fancy a lone trip in the wild?This is for you.', NULL, 6, 7, 1, 70469, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
-(18, 'Enjoy a trip in the wild for a weekend', NULL, 7, 3, 2, 55550, 2, '2021-11-20', '2021-11-22', 'Booked', 2, 0),
-(19, 'Suitable for lovers on their honeymoon. The relaxed atmosphere in the wild makes it more enjoyable.', NULL, 7, 10, 2, 59994, 7, '2021-11-20', '2021-11-27', ' Available', 3, 0),
-(20, 'Have fun in the wild with friends or a patner', NULL, 8, 3, 2, 50000, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(21, 'AN enjoyable honeymoon stay for newlyweds in the wild', NULL, 8, 10, 2, 54900, 5, '2021-11-20', '2021-11-25', ' Available', 3, 0),
-(22, 'Enjoy a week away with friends in the wild', NULL, 9, 6, 2, 27500, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
-(23, 'Enjoy a week away with friends in the wild', NULL, 10, 2, 2, 26400, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
-(24, 'An exquisite stay in the city with friends or alone', NULL, 11, 4, 3, 9437.33, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(25, 'An exquisite stay in the city with friends or alone', NULL, 12, 12, 2, 14783, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(26, 'An exquisite stay in the city with friends or alone', NULL, 12, 4, 3, 9180, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
-(27, 'An exquisite stay in the city for business or leisure', NULL, 12, 8, 2, 18339, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0);
+(3, 'Suitable for a friends getaway at the beautiful coast of Kenya', 1, 1, 2, 2, 8849, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(4, 'A nice retreat in the wild for friends or a couple', 10, 6, 6, 2, 57186.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(5, 'Ideal place to have a staycation for friends in the city', 1, 11, 4, 3, 14156, 1, '2021-11-20', '2021-11-21', ' Available', 2, 0),
+(6, 'Ideal for a weekend away in the mountain', 1, 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(7, 'Enjoy the coastal town of Zanzibar with your friends', 1, 26, 2, 2, 3063, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
+(8, 'Enjoy a beautiful weekend in Ethiopia', 1, 31, 2, 2, 3787, 2, '2021-11-27', '2021-11-29', ' Available', 2, 0),
+(9, 'Suitable for a friends getaway at the beautiful coast of Kenya', 2, 1, 4, 3, 10049, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(10, 'Enjoy a lovely weekend at the coast with your friends or spouse', 3, 2, 2, 2, 8454, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(11, 'Enjoy a lovely weekend at the coast with your family', 4, 2, 9, 4, 10900.5, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(12, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse', 5, 3, 2, 2, 5000, 3, '2021-11-20', '2021-11-23', ' Available', 2, 0),
+(13, 'Enjoy a relaxed stay at the coast of Kenya with your friends or spouse with a beautiful sea view', 6, 3, 5, 2, 8263, 2, '2021-11-20', '2021-11-23', ' Available', 2, 0),
+(14, 'A nice getaway at the coast of Kenya for friends or spouses', 8, 4, 2, 2, 8263, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(15, 'A nice getaway at the coast of Kenya for friends or spouses with a nice view of the ocean', 7, 4, 5, 2, 11124.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(16, 'Enjoy a nice weekend stay with friends or alone at the coast', 9, 5, 2, 2, 15190.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(17, 'You fancy a lone trip in the wild?This is for you.', 11, 6, 7, 1, 70469, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(18, 'Enjoy a trip in the wild for a weekend', 12, 7, 3, 2, 55550, 2, '2021-11-20', '2021-11-22', 'Booked', 2, 0),
+(19, 'Suitable for lovers on their honeymoon. The relaxed atmosphere in the wild makes it more enjoyable.', 13, 7, 10, 2, 59994, 7, '2021-11-20', '2021-11-27', ' Available', 3, 0),
+(20, 'Have fun in the wild with friends or a patner', 14, 8, 3, 2, 50000, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(21, 'AN enjoyable honeymoon stay for newlyweds in the wild', 15, 8, 10, 2, 54900, 5, '2021-11-20', '2021-11-25', ' Available', 3, 0),
+(22, 'Enjoy a week away with friends in the wild', 16, 9, 6, 2, 27500, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(23, 'Enjoy a week away with friends in the wild', 17, 10, 2, 2, 26400, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(24, 'An exquisite stay in the city with friends or alone', 18, 11, 4, 3, 9437.33, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(25, 'An exquisite stay in the city with friends or alone', 24, 12, 12, 2, 14783, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(26, 'An exquisite stay in the city with friends or alone', 20, 12, 4, 3, 9180, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(27, 'An exquisite stay in the city for business or leisure', 21, 12, 8, 2, 18339, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(28, 'Enjoy a beautiful stay in the city with friends', 22, 13, 3, 2, 12984, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(29, 'Enjoy a beautiful stay in the city with friends or for business', 23, 13, 8, 2, 22343.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(30, 'Enjoy a beautiful stay in the city with friends', 24, 14, 12, 2, 10281.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(31, 'Enjoy a beautiful stay in the city with family or friends', 25, 14, 9, 4, 28899, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(32, 'Enjoy a beautiful stay in the city with friends or for business', 26, 14, 8, 2, 20563, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(33, 'Enjoy a beautiful stay in the city with friends', 27, 15, 3, 2, 24499, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(34, 'Enjoy a beautiful stay in the city with friends or for business', 28, 15, 8, 2, 29232, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(35, 'Enjoy a nice weekend in Tanzania near Mt Kilimanjaro with friends', 29, 16, 2, 2, 3758.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(36, 'Enjoy a nice weekend in Tanzania with upto 3 friends or family', 30, 16, 13, 3, 2706, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(37, 'Enjoy a nice weekend in Tanzania near Mt Kilimanjaro with friends', 31, 17, 3, 2, 3172, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(38, 'Enjoy a nice weekend in Tanzania near Mt Kilimanjaro with friends', 32, 18, 2, 2, 4950, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(39, 'Enjoy a nice weekend in Tanzania near Mt Kilimanjaro with friends', 33, 19, 2, 2, 40837, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(40, 'Enjoy a nice weekend in Tanzania near Mt Kilimanjaro with friends', 34, 20, 2, 2, 7517, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(41, 'Enjoy a nice weekend in the beautiful Serengeti with friends or alone', 35, 21, 2, 2, 18885, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(42, 'Enjoy a nice weekend in the beautiful Serengeti with friends', 36, 21, 13, 3, 14967, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(43, 'Enjoy a nice stay in the beautiful Serengeti with your family or friends', 37, 21, 9, 4, 20222, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(44, 'Enjoy a nice stay in the beautiful Serengeti with your family or friends', 38, 22, 2, 2, 53900, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(45, 'Enjoy a nice stay in this deluxe suite in the beautiful Serengeti with your friends', 39, 22, 3, 2, 63250, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(46, 'Enjoy a nice stay in the beautiful Serengeti with your family or friends', 40, 22, 13, 3, 37950, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(47, 'Suitable for friends looking for a quiet stay in the wild', 41, 23, 2, 2, 13365, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(48, 'Enjoy a tranquil weekend in the wild with your friends or patner', 42, 24, 6, 2, 30730, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(49, 'Suitable for a lone traveller looking for a quiet retreat in the wild', 43, 24, 7, 1, 33004, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(50, 'Suitable for friends looking for a quiet stay in the wild', 44, 25, 2, 2, 38005, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(51, 'Enjoy a nice weekend in this beautiful island with friends or alone', 1, 26, 2, 2, 3063, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(52, 'Enjoy a nice weekend in this beautiful islands with friends', 1, 26, 13, 3, 2599, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(53, 'Enjoy a nice weekend in this beautiful islands with friends', 1, 27, 2, 2, 7072.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(54, 'Enjoy a nice weekend in this beautiful islands in a delxe suite with friends', 1, 27, 3, 2, 13922.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(55, 'Enjoy a nice stay in this beautiful islands with your family', 1, 27, 9, 4, 8353, 5, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(56, 'Suitable for a tranquil stay at the beach with 2 to 3 friends', 1, 28, 4, 3, 2998, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(57, 'Suitable for a tranquil stay at the beach with friends or a patner', 1, 28, 3, 2, 3722, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(58, 'Suitable for a tranquil stay at the beach with friends in the sea view room', 1, 28, 5, 2, 5396.5, 2, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(59, 'Enjoy a nice weekend away in Zanzibar with friends or alone', 1, 29, 3, 2, 7772, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(60, 'Enjoy a nice weekend away in Zanzibar with friends or family', 1, 29, 9, 4, 4085.5, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(61, 'Enjoy a nice weekend away in Zanzibar with friends or alone', 1, 30, 12, 2, 21802.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(62, 'Enjoy a nice stay in Ethiopia with friends', 1, 31, 2, 2, 3787, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(63, 'Enjoy a nice weekend in Ethiopia with friends', 1, 31, 8, 2, 6627, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(64, 'Enjoy a nice stay in Ethiopia with friends or family', 1, 31, 14, 4, 4761.5, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(65, 'Suitable for a friends getaway', 1, 32, 2, 2, 12047, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(66, 'Suitable for a friends or business getaway', 1, 32, 8, 2, 15851, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(67, 'Enjoy a relaxed weekend in Ethiopia with friends or family', 1, 33, 12, 2, 8355, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(68, 'Suitable for a solo retreat in Ethiopia', 1, 33, 11, 1, 27850, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(69, 'Enjoy a nice stay in Ethiopia with friends or family in the kings suite', 1, 34, 12, 2, 11530, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(70, 'Enjoy a nice stay in Ethiopia with friends or family in the queen suite', 1, 34, 15, 2, 45511.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(71, 'Suitable for a friends getaway', 1, 35, 3, 2, 7018, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(72, 'Suitable for a friends or business getaway', 1, 35, 8, 2, 8522, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(73, 'Enjoy  a nice weekend with friends or family', 1, 36, 2, 2, 2931.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(74, '', 1, 36, 3, 2, 3157, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(75, 'Suitable for a solo retreat', 1, 36, 1, 1, 4059, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(76, 'Enjoy  a nice weekend with friends', 1, 37, 2, 2, 2475, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(77, 'Enjoy  a nice weekend with friends or family in the deluxe room', 1, 37, 3, 2, 3300, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(78, 'Enjoy  a nice weekend with friends or family', 1, 38, 2, 2, 1933, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(79, 'Enjoy  a nice weekend with friends or family in the deluxe room', 1, 38, 3, 2, 1401.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(80, 'Enjoy  a nice weekend with friends or family', 1, 39, 2, 2, 1336, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(81, 'Enjoy  a nice weekend with friends or family in the queen suite', 1, 39, 15, 2, 1392, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(82, 'Suitable for a solo retreat', 1, 39, 1, 1, 2116, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(83, 'Enjoy  a nice weekend with friends or family', 1, 40, 2, 2, 2405, 2, '2021-11-20', '2021-11-22', ' Available', 1, 0),
+(84, 'Enjoy  a nice weekend with friends or family in the king suite', 1, 40, 12, 2, 2154.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(85, 'Suitable for a family retreat', 1, 40, 9, 4, 2087.75, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(86, 'Suitable for a solo retreat', 1, 40, 1, 1, 3207, 2, '2021-11-20', '2021-11-22', ' Available', 4, 0),
+(87, 'Enjoy a nice stay in Bishoftu with friends', 1, 41, 2, 2, 2860, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(88, 'Enjoy a nice stay in Bishoftu with friends', 1, 42, 2, 2, 8912, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(89, 'Enjoy a nice weekend in Bishoftu with friends or family', 1, 42, 3, 2, 13925, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(90, 'Enjoy a nice stay in Bishoftu with family', 1, 42, 9, 4, 5291.5, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0),
+(91, 'Enjoy a nice stay in Bishoftu with up to 3friends', 1, 42, 13, 3, 8912.33, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(92, 'Enjoy a nice weeekend in Bishoftu with friends', 1, 43, 2, 2, 2860, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(93, 'Enjoy a nice stay in Bishoftu with friends or for business', 1, 43, 8, 2, 3740, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(94, 'Enjoy a nice stay in Bishoftu with family', 1, 43, 9, 4, 2007.5, 5, '2021-11-20', '2021-11-25', ' Available', 2, 0),
+(95, 'Enjoy a nice weekend in Bishoftu with friends in this deluxe suite', 1, 44, 3, 2, 3905, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(96, 'Enjoy a nice stay in Bishoftu with friends', 1, 45, 2, 2, 4739, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(97, 'Enjoy a nice weekend in Bishoftu with friends or for business', 1, 45, 8, 2, 5820.5, 2, '2021-11-20', '2021-11-22', ' Available', 2, 0),
+(98, 'Enjoy a nice stay in Bishoftu with family', 1, 45, 9, 4, 2313, 5, '2021-11-20', '2021-11-25', ' Available', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -639,7 +786,9 @@ INSERT INTO `rooms_table` (`roomID`, `roomType`, `roomDescription`, `noOfGuests`
 (10, 'HoneyMoon Suite', 'One double bed for honeymooners', 2),
 (11, 'Studio Suite', 'One bed only fits one person', 1),
 (12, 'King Room', 'One large king-sized bed', 2),
-(13, 'Triple Room', 'One double bed and one standard bed', 3);
+(13, 'Triple Room', 'One double bed and one standard bed', 3),
+(14, 'Presidential Suite', 'Holds up to 4 people', 4),
+(15, 'Queen Suite', 'A large queen bed for two people', 2);
 
 -- --------------------------------------------------------
 
@@ -834,7 +983,8 @@ ALTER TABLE `package_table`
   ADD PRIMARY KEY (`packageID`),
   ADD KEY `hotelID` (`hotelID`),
   ADD KEY `roomID` (`roomID`),
-  ADD KEY `categoryID` (`categoryID`);
+  ADD KEY `categoryID` (`categoryID`),
+  ADD KEY `packageImage` (`packageImage`);
 
 --
 -- Indexes for table `payment_table`
@@ -934,19 +1084,19 @@ ALTER TABLE `hotels_table`
 -- AUTO_INCREMENT for table `hotel_amenities_table`
 --
 ALTER TABLE `hotel_amenities_table`
-  MODIFY `amenityID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `amenityID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `images_table`
 --
 ALTER TABLE `images_table`
-  MODIFY `imageID` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `imageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `package_table`
 --
 ALTER TABLE `package_table`
-  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `packageID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `payment_table`
@@ -964,7 +1114,7 @@ ALTER TABLE `paymethod_table`
 -- AUTO_INCREMENT for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
-  MODIFY `roomID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `roomID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_admin`
@@ -1032,7 +1182,8 @@ ALTER TABLE `images_table`
 ALTER TABLE `package_table`
   ADD CONSTRAINT `package_table_ibfk_1` FOREIGN KEY (`hotelID`) REFERENCES `hotels_table` (`hotelID`),
   ADD CONSTRAINT `package_table_ibfk_2` FOREIGN KEY (`roomID`) REFERENCES `rooms_table` (`roomID`),
-  ADD CONSTRAINT `package_table_ibfk_3` FOREIGN KEY (`categoryID`) REFERENCES `categories_table` (`categoryID`);
+  ADD CONSTRAINT `package_table_ibfk_3` FOREIGN KEY (`categoryID`) REFERENCES `categories_table` (`categoryID`),
+  ADD CONSTRAINT `package_table_ibfk_4` FOREIGN KEY (`packageImage`) REFERENCES `images_table` (`imageID`);
 
 --
 -- Constraints for table `payment_table`
