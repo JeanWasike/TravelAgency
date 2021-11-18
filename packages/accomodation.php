@@ -74,6 +74,7 @@
         $data=getData($sql_Select);
 
         for($i=0;$i<count($data);$i++){
+          $packageImage=$data[$i]["packageImage"];
           $packageDescription=$data[$i]["packageDescription"];
           $noOfGuests=$data[$i]["noOfGuests"];
           $pricePerGuest=$data[$i]["pricePerGuest"];
@@ -84,39 +85,47 @@
           $totalPricePerNight= $pricePerGuest * $noOfGuests;
           $totalPrice=$totalPricePerNight * $noOfDays;
           
-          echo "
-          <div class=\"container\">
-          <div class=\"row px-3\">
-            <div class=\"col-lg-10 col-xl-9 card flex-row mx-auto px-0\">
-              <div class=\"img-left d-none d-md-flex\">
-                <img src=\"images/room2.jpg\" height=\"400px\" width=\"400px\">
-              </div>
-      
-          <div class=\"card-body\">
-      
-            <div>
-              <p>$packageDescription</p><br>
-              <p>Room Type: </p><br>
-              <p>$noOfGuests Guests, $noOfDays Days </p><br>
-              <p>Price Per Night: Ksh $totalPricePerNight</p><br>
-              <p>Check In Date: $checkInDate</p><br>
-              <p>Check Out Date: $checkOutDate</p><br>
-              <p> Package Price:  Ksh $totalPrice</p>
-            </div>
-             <br>
-            <div class=\"amenities\">
-              <i class=\"fa fa-wifi\">Free Wi-Fi</i>
-              <i class=\"fa fa-product-hunt\">Free Parking</i>
-            </div>
+          $sql_Select_Image="SELECT imageName FROM images_table WHERE imageID='$packageImage';";
+          $imageData=getData($sql_Select_Image);
+          if($imageData!=0){
+            $image=$imageData[0]["imageName"];
 
-            
+            echo "
+            <div class=\"container\">
+            <div class=\"row px-3\">
+              <div class=\"col-lg-10 col-xl-9 card flex-row mx-auto px-0\">
+                <div class=\"img-left d-none d-md-flex\">
+                  <img src=\"$image\" height=\"400px\" width=\"400px\">
+                </div>
         
+            <div class=\"card-body\">
+        
+              <div>
+                <p>$packageDescription</p><br>
+                <p>Room Type: </p><br>
+                <p>$noOfGuests Guests, $noOfDays Days </p><br>
+                <p>Price Per Night: Ksh $totalPricePerNight</p><br>
+                <p>Check In Date: $checkInDate</p><br>
+                <p>Check Out Date: $checkOutDate</p><br>
+                <p> Package Price:  Ksh $totalPrice</p>
+              </div>
+               <br>
+              <div class=\"amenities\">
+                <i class=\"fa fa-wifi\">Free Wi-Fi</i>
+                <i class=\"fa fa-product-hunt\">Free Parking</i>
+              </div>
+  
+              
+          
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<br><br><br><br>
-";
+  <br><br><br><br>
+  ";
+          }
+
+        
         }
   ?>
 
