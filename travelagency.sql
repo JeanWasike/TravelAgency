@@ -2,8 +2,8 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Nov 18, 2021 at 08:27 AM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 25, 2021 at 09:21 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -41,7 +41,7 @@ INSERT INTO `airports_and_airstrips_table` (`ID`, `name`) VALUES
 (2, 'Dar es Salaam International (DAR),Tanzania'),
 (3, 'Addis Ababa-Addis Ababa Bole (ADD),Ethiopia'),
 (4, 'Zanzibar-Zanzibar Kisauni (ZNZ),Tanzania'),
-(5, 'Mombasa - Mombasa Moi International Airport (MBA),Kenya,Tanzania'),
+(5, 'Mombasa - Mombasa Moi International Airport (MBA),Kenya'),
 (6, 'Kigali-Kigali International Airport (KGL),Rwanda');
 
 -- --------------------------------------------------------
@@ -54,11 +54,11 @@ CREATE TABLE `booked_buses_table` (
   `ID` int(10) NOT NULL,
   `clientID` int(8) NOT NULL,
   `busID` int(10) NOT NULL,
+  `companyID` int(10) NOT NULL,
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
-  `departureDate` date NOT NULL,
-  `returnDate` date NOT NULL,
   `class` varchar(10) NOT NULL,
+  `noOfPassengers` int(4) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -71,10 +71,14 @@ CREATE TABLE `booked_buses_table` (
 CREATE TABLE `booked_cars_table` (
   `ID` int(10) NOT NULL,
   `clientID` int(8) NOT NULL,
+  `clientName` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phoneNumber` varchar(13) NOT NULL,
   `vehicleIdentificationNumber` int(20) NOT NULL,
   `pickUpDate` date NOT NULL,
   `dropOffDate` date NOT NULL,
   `pickUpPlace` varchar(24) NOT NULL,
+  `PickupTime` time NOT NULL,
   `dropOffPlace` varchar(24) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -142,12 +146,39 @@ CREATE TABLE `booking_table` (
 
 CREATE TABLE `buses_table` (
   `busID` int(10) NOT NULL,
+  `companyID` int(10) NOT NULL,
   `from` varchar(255) NOT NULL,
   `to` varchar(255) NOT NULL,
-  `class` varchar(10) NOT NULL,
-  `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `buses_table`
+--
+
+INSERT INTO `buses_table` (`busID`, `companyID`, `from`, `to`, `price`) VALUES
+(1, 1000, '100', '102', 1000),
+(2, 1000, '100', '101', 1600),
+(3, 1000, '100', '104', 2400),
+(4, 1000, '100', '103', 2200),
+(5, 1000, '100', '105', 1600),
+(6, 1000, '100', '106', 1400),
+(7, 1000, '100', '107', 3200),
+(8, 1000, '103', '105', 1500),
+(9, 1000, '103', '106', 1500),
+(10, 1000, '103', '104', 1000),
+(11, 1000, '103', '107', 3000),
+(12, 1000, '103', '100', 2200),
+(13, 1000, '103', '101', 3000),
+(14, 1000, '103', '102', 3200),
+(15, 1000, '107', '108', 1600),
+(16, 1000, '107', '109', 1000),
+(17, 1000, '107', '100', 3400),
+(18, 1000, '107', '103', 3000),
+(19, 1001, '110', '111', 1800),
+(20, 1001, '110', '112', 800),
+(21, 1002, '113', '114', 2000),
+(22, 1002, '113', '115', 2100);
 
 -- --------------------------------------------------------
 
@@ -190,14 +221,30 @@ INSERT INTO `business_class_flights_table` (`ID`, `flightNumber`, `from`, `to`, 
 --
 
 CREATE TABLE `cars_table` (
-  `vehicleIdentificationNumber` int(20) NOT NULL,
-  `countryName` varchar(45) NOT NULL,
-  `pickUp` varchar(255) NOT NULL,
-  `dropOff` varchar(255) NOT NULL,
-  `capacity` int(10) NOT NULL,
+  `vehicleIdentificationNumber` varchar(255) NOT NULL,
+  `vehicleName` varchar(24) NOT NULL,
+  `carBodyStyle` varchar(24) NOT NULL,
+  `doors` int(10) NOT NULL,
+  `seats` int(10) NOT NULL,
+  `luggageCapacity` varchar(10) NOT NULL,
+  `transmissionType` varchar(24) NOT NULL,
   `price` double NOT NULL,
-  `imageUrl` varchar(255) NOT NULL
+  `imageUrl` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cars_table`
+--
+
+INSERT INTO `cars_table` (`vehicleIdentificationNumber`, `vehicleName`, `carBodyStyle`, `doors`, `seats`, `luggageCapacity`, `transmissionType`, `price`, `imageUrl`) VALUES
+('453BMHB68B3286050', 'Toyota Vanguard', 'SUV', 4, 7, '2', 'auto', 13552, 'https://www.auto-data.net/images/f130/Toyota-Vanguard_1.jpg'),
+('5YJSAIDG9DFPI4705', 'Mercedes Benz GLE', 'luxury SUV', 4, 5, '5', 'auto', 23968, 'https://www.mercedesbenzcary.com/assets/shared/CustomHTMLFiles/Responsive/MRP/Mercedes-Benz/2018/GLE-SUV/images/2018-Mercedes-Benz-GLE-SUV-01.jpg'),
+('7J3ZZ56T7834500003', 'Toyota Fielder', 'station wargon', 4, 5, '3', 'auto', 5488, 'https://www.timamcars.co.ke/wp-content/uploads/2019/03/FS2-3.png'),
+('IG1YZ23J9P580342', 'VW Polo', 'hatchback', 4, 5, '2', 'auto', 3920, 'https://upload.wikimedia.org/wikipedia/commons/d/d4/2018_Volkswagen_Polo_SE_1.0_Front.jpg'),
+('IHGBH41JXIXN109186', 'Mercedes Benz c300', 'coupe', 2, 2, '2', 'auto', 6720, 'https://upload.wikimedia.org/wikipedia/commons/6/62/2017_Mercedes-Benz_C300_AMG_Line_Premium_Automatic_2.0_Front.jpg'),
+('JN3MS37A9PW202929', 'Mazda Premacy', 'minivan', 5, 7, '5', 'auto', 10304, 'https://pictures.topspeed.com/IMG/crop/201307/mazda5-35_800x0w.jpg'),
+('JT152EEA100302159', 'Toyota Corolla Axio', 'sedan', 4, 5, '2', 'auto', 4480, 'https://www.mobikeycarmarket.co.ke/fotos/12/produtos/imagens/14004/2_29606275609fbdda40bf2.jpg'),
+('RTGHK3IU2ERT02145', 'BMW 3 Series', 'Executive Sedan', 4, 5, '2', 'auto', 22456, 'https://media.ed.edmunds-media.com/for-sale/05-3mw5r7j09m8b73625/img-1-600x400.jpg');
 
 -- --------------------------------------------------------
 
@@ -730,31 +777,11 @@ CREATE TABLE `railway_stations_table` (
 
 INSERT INTO `railway_stations_table` (`ID`, `name`) VALUES
 (1, 'Nairobi Terminus,Kenya'),
-(2, 'Nairobi Terminus,Kenya'),
-(3, 'Mombasa Terminus,Kenya'),
-(4, 'Atikilt Tera,Ethiopia'),
-(5, 'Addis Ababa-Kality,Ethiopia'),
-(6, 'Tazara-Dar es Salaam,Tanzania'),
-(7, 'Arusha,Tanzania'),
-(8, 'Nairobi Terminus,Kenya'),
-(9, 'Mombasa Terminus,Kenya'),
-(10, 'Atikilt Tera,Ethiopia'),
-(11, 'Addis Ababa-Kality,Ethiopia'),
-(12, 'Tazara-Dar es Salaam,Tanzania'),
-(13, 'Arusha,Tanzania'),
-(1, 'Nairobi Terminus,Kenya'),
-(2, 'Nairobi Terminus,Kenya'),
-(3, 'Mombasa Terminus,Kenya'),
-(4, 'Atikilt Tera,Ethiopia'),
-(5, 'Addis Ababa-Kality,Ethiopia'),
-(6, 'Tazara-Dar es Salaam,Tanzania'),
-(7, 'Arusha,Tanzania'),
-(8, 'Nairobi Terminus,Kenya'),
-(9, 'Mombasa Terminus,Kenya'),
-(10, 'Atikilt Tera,Ethiopia'),
-(11, 'Addis Ababa-Kality,Ethiopia'),
-(12, 'Tazara-Dar es Salaam,Tanzania'),
-(13, 'Arusha,Tanzania');
+(2, 'Mombasa Terminus,Kenya'),
+(3, 'Atikilt Tera,Ethiopia'),
+(4, 'Addis Ababa-Kality,Ethiopia'),
+(5, 'Tazara-Dar es Salaam,Tanzania'),
+(6, 'Arusha,Tanzania');
 
 -- --------------------------------------------------------
 
@@ -808,6 +835,26 @@ CREATE TABLE `tbl_admin` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_bus_companies`
+--
+
+CREATE TABLE `tbl_bus_companies` (
+  `companyID` int(10) NOT NULL,
+  `companyName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_bus_companies`
+--
+
+INSERT INTO `tbl_bus_companies` (`companyID`, `companyName`) VALUES
+(1, 'Modern Coast'),
+(2, 'Selam Bus'),
+(3, 'Fahim Bus Services');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_client`
 --
 
@@ -840,6 +887,40 @@ CREATE TABLE `tbl_review` (
   `clientID` int(8) NOT NULL,
   `reviewTimeCreated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_towns`
+--
+
+CREATE TABLE `tbl_towns` (
+  `townID` int(10) NOT NULL,
+  `countryID` int(10) NOT NULL,
+  `townName` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_towns`
+--
+
+INSERT INTO `tbl_towns` (`townID`, `countryID`, `townName`) VALUES
+(100, 1, 'Nairobi'),
+(101, 1, 'Mombasa'),
+(102, 1, 'Narok'),
+(103, 4, 'Dodoma'),
+(104, 4, 'Dar es Salaam'),
+(105, 4, 'Moshi'),
+(106, 4, 'Arusha'),
+(107, 6, 'Kigali'),
+(108, 6, 'Kibuye'),
+(109, 6, 'Rwamagana'),
+(110, 2, 'Addis Ababa'),
+(111, 2, 'Bahir Dar'),
+(112, 2, 'Bishoftu'),
+(113, 7, 'Lusaka'),
+(114, 7, 'Livingstone'),
+(115, 7, 'Victoria Falls');
 
 -- --------------------------------------------------------
 
@@ -878,9 +959,7 @@ ALTER TABLE `booked_buses_table`
 -- Indexes for table `booked_cars_table`
 --
 ALTER TABLE `booked_cars_table`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `clientID` (`clientID`),
-  ADD KEY `vehicleIdentificationNumber` (`vehicleIdentificationNumber`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `booked_flights_table`
@@ -1004,6 +1083,12 @@ ALTER TABLE `paymethod_table`
   ADD KEY `clientID` (`clientID`);
 
 --
+-- Indexes for table `railway_stations_table`
+--
+ALTER TABLE `railway_stations_table`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
@@ -1014,6 +1099,12 @@ ALTER TABLE `rooms_table`
 --
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`adminID`);
+
+--
+-- Indexes for table `tbl_bus_companies`
+--
+ALTER TABLE `tbl_bus_companies`
+  ADD PRIMARY KEY (`companyID`);
 
 --
 -- Indexes for table `tbl_client`
@@ -1029,6 +1120,13 @@ ALTER TABLE `tbl_review`
   ADD KEY `clientID` (`clientID`);
 
 --
+-- Indexes for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  ADD PRIMARY KEY (`townID`),
+  ADD KEY `countryID` (`countryID`);
+
+--
 -- Indexes for table `trains_table`
 --
 ALTER TABLE `trains_table`
@@ -1037,6 +1135,18 @@ ALTER TABLE `trains_table`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `booked_cars_table`
+--
+ALTER TABLE `booked_cars_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `booking_table`
@@ -1048,7 +1158,7 @@ ALTER TABLE `booking_table`
 -- AUTO_INCREMENT for table `buses_table`
 --
 ALTER TABLE `buses_table`
-  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8457225460;
+  MODIFY `busID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `categories_table`
@@ -1111,6 +1221,12 @@ ALTER TABLE `paymethod_table`
   MODIFY `paymentMethodID` int(255) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `railway_stations_table`
+--
+ALTER TABLE `railway_stations_table`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `rooms_table`
 --
 ALTER TABLE `rooms_table`
@@ -1121,6 +1237,12 @@ ALTER TABLE `rooms_table`
 --
 ALTER TABLE `tbl_admin`
   MODIFY `adminID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70745622;
+
+--
+-- AUTO_INCREMENT for table `tbl_bus_companies`
+--
+ALTER TABLE `tbl_bus_companies`
+  MODIFY `companyID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_client`
@@ -1135,6 +1257,12 @@ ALTER TABLE `tbl_review`
   MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75035146;
 
 --
+-- AUTO_INCREMENT for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  MODIFY `townID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
 -- AUTO_INCREMENT for table `trains_table`
 --
 ALTER TABLE `trains_table`
@@ -1143,6 +1271,13 @@ ALTER TABLE `trains_table`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `booked_buses_table`
+--
+ALTER TABLE `booked_buses_table`
+  ADD CONSTRAINT `booked_buses_table_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`),
+  ADD CONSTRAINT `booked_buses_table_ibfk_2` FOREIGN KEY (`busID`) REFERENCES `buses_table` (`busID`);
 
 --
 -- Constraints for table `booking_table`
@@ -1205,6 +1340,12 @@ ALTER TABLE `paymethod_table`
 --
 ALTER TABLE `tbl_review`
   ADD CONSTRAINT `tbl_review_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  ADD CONSTRAINT `tbl_towns_ibfk_1` FOREIGN KEY (`countryID`) REFERENCES `countries_table` (`countryID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
