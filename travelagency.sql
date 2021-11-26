@@ -121,21 +121,23 @@ CREATE TABLE `booked_trains_table` (
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `booking_table`
+-- RESERVATION TABLE REPLACES BOOKING TABLE
+-- Table structure for table `reservation_table`
 --
 
-CREATE TABLE `booking_table` (
-  `bookingID` int(255) NOT NULL,
-  `packageID` bigint(255) NOT NULL,
-  `clientID` int(8) NOT NULL,
-  `destID` int(100) NOT NULL,
-  `fromDate` date NOT NULL,
-  `toDate` date NOT NULL,
-  `modeTransportID` int(10) NOT NULL,
-  `price` double NOT NULL,
-  `quantity` int(5) NOT NULL,
-  `bookingStatus` enum('Available','Not Available') NOT NULL
+CREATE TABLE `reservation_table` (
+  `reservationID` int(255) NOT NULL,
+  `fname` varchar(25) NOT NULL,
+  `lname` varchar(25) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(13) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `inputState` varchar(50) NOT NULL,
+  `city` varchar(100)NOT NULL,
+  `inputAdults` int(3) NOT NULL,
+  `inputChildren` int(3) NOT NULL,
+  `packageID` int(255) NOT NULL,
+  `modeTransportID` int(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -731,33 +733,20 @@ INSERT INTO `package_table` (`packageID`, `packageDescription`, `packageImage`, 
 
 --
 -- Table structure for table `payment_table`
---
+-- PaymentMethod is completely dropped from DB
 
-CREATE TABLE `payment_table` (
+  CREATE TABLE `payment_table` (
   `paymentID` int(255) NOT NULL,
-  `bookingID` int(255) NOT NULL,
-  `paymentMethodID` int(255) NOT NULL,
+  `reservationID` int(255) NOT NULL,
   `clientID` int(8) NOT NULL,
-  `clientFName` varchar(25) NOT NULL,
-  `clientLName` varchar(25) NOT NULL,
+  `defaultCurrency` enum('KSH') NOT NULL,
+  `preferredCurrency` enum('USD','USH','TSH','EURO','RWANDESE','FRANC') NOT NULL,
+  `paymentMode` enum('Credit','Card','M-Pesa','PayPal','eWallet') NOT NULL,
   `amountPaid` double NOT NULL,
   `datePaid` date NOT NULL,
   `paymentStatus` enum('Confirmed','Pending','Cancelled') NOT NULL,
   `adminID` int(8) NOT NULL,
   `referenceNumber` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paymethod_table`
---
-
-CREATE TABLE `paymethod_table` (
-  `paymentMethodID` int(255) NOT NULL,
-  `clientID` int(8) NOT NULL,
-  `currency` enum('USD','KSH','USH','TSH','EURO','RWANDESE','FRANC') NOT NULL,
-  `paymentMode` enum('Credit','Card','M-Pesa','PayPal','eWallet') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
