@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 29, 2021 at 06:47 PM
+-- Generation Time: Nov 29, 2021 at 06:59 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -71,6 +71,9 @@ CREATE TABLE `booked_buses_table` (
 CREATE TABLE `booked_cars_table` (
   `ID` int(10) NOT NULL,
   `clientID` int(8) NOT NULL,
+  `clientName` varchar(75) NOT NULL,
+  `email` varchar(75) NOT NULL,
+  `phoneNumber` int(10) NOT NULL,
   `vehicleIdentificationNumber` int(20) NOT NULL,
   `pickUpDate` date NOT NULL,
   `dropOffDate` date NOT NULL,
