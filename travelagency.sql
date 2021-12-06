@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 29, 2021 at 06:59 PM
+-- Generation Time: Dec 06, 2021 at 05:38 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -1148,6 +1148,40 @@ CREATE TABLE `tbl_review` (
   `reviewTimeCreated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_towns`
+--
+
+CREATE TABLE `tbl_towns` (
+  `townID` int(10) NOT NULL,
+  `countryID` int(10) NOT NULL,
+  `townName` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_towns`
+--
+
+INSERT INTO `tbl_towns` (`townID`, `countryID`, `townName`) VALUES
+(100, 1, 'Nairobi'),
+(101, 1, 'Mombasa'),
+(102, 1, 'Narok'),
+(103, 4, 'Dodoma'),
+(104, 4, 'Dar es Salaam'),
+(105, 4, 'Moshi'),
+(106, 4, 'Arusha'),
+(107, 6, 'Kigali'),
+(108, 6, 'Kibuye'),
+(109, 6, 'Rwamagana'),
+(110, 2, 'Addis Ababa'),
+(111, 2, 'Bahir Dar'),
+(112, 2, 'Bishoftu'),
+(113, 7, 'Lusaka'),
+(114, 7, 'Livingstone'),
+(115, 7, 'Victoria Falls');
+
 --
 -- Indexes for dumped tables
 --
@@ -1346,6 +1380,13 @@ ALTER TABLE `tbl_review`
   ADD KEY `clientID` (`clientID`);
 
 --
+-- Indexes for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  ADD PRIMARY KEY (`townID`),
+  ADD KEY `countryID` (`countryID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1452,6 +1493,12 @@ ALTER TABLE `tbl_review`
   MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75035146;
 
 --
+-- AUTO_INCREMENT for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  MODIFY `townID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -1527,6 +1574,12 @@ ALTER TABLE `reservation_table`
 --
 ALTER TABLE `tbl_review`
   ADD CONSTRAINT `tbl_review_ibfk_1` FOREIGN KEY (`clientID`) REFERENCES `tbl_client` (`clientID`);
+
+--
+-- Constraints for table `tbl_towns`
+--
+ALTER TABLE `tbl_towns`
+  ADD CONSTRAINT `tbl_towns_ibfk_1` FOREIGN KEY (`countryID`) REFERENCES `countries_table` (`countryID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
